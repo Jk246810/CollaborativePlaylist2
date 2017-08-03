@@ -1,6 +1,0 @@
-framework module Pods_CollaborativePlaylist2 {
-  umbrella header "Pods-CollaborativePlaylist2-umbrella.h"
-
-  export *
-  module * { export * }
-}
