@@ -79,7 +79,8 @@ class JoinPlaylistViewController: UIViewController, UITableViewDelegate, UITable
         auth = SPTAuth.defaultInstance()
         auth.clientID = "27094f14e3b842d28bdffcc9d3f5d863"
         auth.redirectURL = URL(string: "collaborativePlaylist2://")
-        auth.requestedScopes = [SPTAuthStreamingScope, SPTAuthUserLibraryReadScope, SPTAuthUserReadPrivateScope, SPTAuthUserLibraryModifyScope, SPTAuthPlaylistReadPrivateScope, SPTAuthPlaylistModifyPublicScope, SPTAuthPlaylistReadPrivateScope]
+        auth.requestedScopes = [SPTAuthStreamingScope, SPTAuthUserLibraryReadScope, SPTAuthUserReadPrivateScope, SPTAuthUserLibraryModifyScope]
+      
         loginUrl = auth.spotifyWebAuthenticationURL()
     }
     

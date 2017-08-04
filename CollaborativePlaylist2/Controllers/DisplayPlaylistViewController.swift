@@ -144,9 +144,7 @@ extension DisplayPlaylistViewController {
         })
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("kdjhgiuesgfurgeiugui \(indexPath.row)")
-    }
+    
 }
 
 //MARK: - Segue
