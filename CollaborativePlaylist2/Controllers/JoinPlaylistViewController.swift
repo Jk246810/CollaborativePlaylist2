@@ -110,7 +110,12 @@ class JoinPlaylistViewController: UIViewController, UITableViewDelegate, UITable
     func initializePlayer(authSession:SPTSession){
         self.player!.playbackDelegate = self
         self.player!.delegate = self
-        try! player?.start(withClientId: auth.clientID)
+        do {
+            try player?.start(withClientId: auth.clientID)
+        } catch {
+            print("error")
+        }
+
         self.player!.login(withAccessToken: authSession.accessToken)
         
         Spartan.authorizationToken = session.accessToken
