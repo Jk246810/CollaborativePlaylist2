@@ -55,18 +55,12 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
 //        }else {
         setup()
         print("auth session \(self.auth.session)")
-        if (SPTAuth().session == nil) {
-            
-            NotificationCenter.default.addObserver(self, selector: #selector(ListSpotifyMusicViewController.updateAfterFirstLogin), name: NSNotification.Name(rawValue: "loginSuccessfull"), object: nil)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(ListSpotifyMusicViewController.updateAfterFirstLogin), name: NSNotification.Name(rawValue: "loginSuccessfull"), object: nil)
     
-            player = SPTAudioStreamingController.sharedInstance()
-            
-        } else {
-            LoginToSpotify.isHidden = true
-            print("auth session 2 \(self.auth.session)")
-        }
-       
+
+        player = SPTAudioStreamingController.sharedInstance()
+    
     }
     
         // Do any additional setup after loading the view.
@@ -130,12 +124,16 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
     
     
     func initializePlayer(authSession:SPTSession){
-        if self.player == nil {
-            self.player!.playbackDelegate = self
-            self.player!.delegate = self
-            try! player?.start(withClientId: auth.clientID)
-            self.player!.login(withAccessToken: authSession.accessToken)
+        self.player!.playbackDelegate = self
+        self.player!.delegate = self
+        
+        do {
+            try player?.start(withClientId: auth.clientID)
+        } catch {
+            print("error")
         }
+        
+        self.player!.login(withAccessToken: authSession.accessToken)
     
         Spartan.authorizationToken = session.accessToken
         print("hello")
