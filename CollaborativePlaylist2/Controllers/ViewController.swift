@@ -39,7 +39,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                         return
                     } else {
                         self.joinPlaylist = Playlist(snapshot: snapshot)!
-                    
+                        
                         self.performSegue(withIdentifier: "joinPlaylist", sender: self)
                     //prtformsegue
                     }
@@ -81,11 +81,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     let displayPlaylistViewController = segue.destination as! DisplayPlaylistViewController
                     displayPlaylistViewController.selectedPlaylist = playlist
                     
+                    
                 }
                 print ("hello")
-            } else if identifier == "showJoinPlaylist" {
+            } else if identifier == "joinPlaylist" {
                 let joinPlaylistViewController = segue.destination as! JoinPlaylistViewController
                 joinPlaylistViewController.playlist = joinPlaylist
+                
             }else if identifier == "newPlaylist" {
                 //                PlaylistService.I.create(playlistName: "playlistName")
                 

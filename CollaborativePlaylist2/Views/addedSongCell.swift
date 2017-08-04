@@ -13,6 +13,7 @@ class addedSongCell: UITableViewCell {
     @IBOutlet weak var songImageView: UIImageView!
     
     @IBOutlet weak var songNameLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

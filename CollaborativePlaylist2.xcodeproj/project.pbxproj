@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		C2C4EBAA603DD174D8F7CC7E /* Pods_CollaborativePlaylist2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2DE662469A9B810F837295D /* Pods_CollaborativePlaylist2.framework */; };
-		D30252651F29A16E00A144CB /* Soundtrack1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D30252641F29A16E00A144CB /* Soundtrack1.mp3 */; };
 		D31D91761F16A4A400F6AE91 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31D91751F16A4A400F6AE91 /* AppDelegate.swift */; };
 		D31D917D1F16A4A400F6AE91 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D31D917C1F16A4A400F6AE91 /* Assets.xcassets */; };
 		D31D918A1F16A86A00F6AE91 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31D91891F16A86A00F6AE91 /* ViewController.swift */; };
@@ -20,6 +19,7 @@
 		D31D919B1F16B53800F6AE91 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31D919A1F16B53800F6AE91 /* User.swift */; };
 		D324C8BF1F32565A00F4FB64 /* FirebaseQueryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D324C8BE1F32565A00F4FB64 /* FirebaseQueryService.swift */; };
 		D324C8C11F32831900F4FB64 /* JoinPlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D324C8C01F32831900F4FB64 /* JoinPlaylistViewController.swift */; };
+		D324C8C31F33B99B00F4FB64 /* JoinSpotifySongsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D324C8C21F33B99B00F4FB64 /* JoinSpotifySongsCell.swift */; };
 		D33B97621F2A615D00A8153A /* MusicService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33B97611F2A615D00A8153A /* MusicService.swift */; };
 		D3403A9F1F28FF38007ED86D /* Music.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3403A9E1F28FF38007ED86D /* Music.swift */; };
 		D3490BB01F2FD159004BFFD0 /* ListSpotifyMusicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3490BAF1F2FD159004BFFD0 /* ListSpotifyMusicViewController.swift */; };
@@ -43,7 +43,6 @@
 /* Begin PBXFileReference section */
 		0A548AE2FA23F90B68833B5B /* Pods-CollaborativePlaylist2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CollaborativePlaylist2.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CollaborativePlaylist2/Pods-CollaborativePlaylist2.debug.xcconfig"; sourceTree = "<group>"; };
 		B2DE662469A9B810F837295D /* Pods_CollaborativePlaylist2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CollaborativePlaylist2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D30252641F29A16E00A144CB /* Soundtrack1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Soundtrack1.mp3; sourceTree = "<group>"; };
 		D31D91721F16A4A400F6AE91 /* CollaborativePlaylist2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CollaborativePlaylist2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D31D91751F16A4A400F6AE91 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D31D917C1F16A4A400F6AE91 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -56,6 +55,7 @@
 		D31D919A1F16B53800F6AE91 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Models/User.swift; sourceTree = "<group>"; };
 		D324C8BE1F32565A00F4FB64 /* FirebaseQueryService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseQueryService.swift; sourceTree = "<group>"; };
 		D324C8C01F32831900F4FB64 /* JoinPlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JoinPlaylistViewController.swift; path = Controllers/JoinPlaylistViewController.swift; sourceTree = "<group>"; };
+		D324C8C21F33B99B00F4FB64 /* JoinSpotifySongsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JoinSpotifySongsCell.swift; path = Views/JoinSpotifySongsCell.swift; sourceTree = "<group>"; };
 		D33B97611F2A615D00A8153A /* MusicService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MusicService.swift; path = Services/MusicService.swift; sourceTree = "<group>"; };
 		D3403A9E1F28FF38007ED86D /* Music.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Music.swift; path = Models/Music.swift; sourceTree = "<group>"; };
 		D3490BAF1F2FD159004BFFD0 /* ListSpotifyMusicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ListSpotifyMusicViewController.swift; path = Controllers/ListSpotifyMusicViewController.swift; sourceTree = "<group>"; };
@@ -142,7 +142,6 @@
 				D31D91951F16A93900F6AE91 /* ViewControllers */,
 				D31D917C1F16A4A400F6AE91 /* Assets.xcassets */,
 				D3BD919D1F1D32F8001A4797 /* CollaborativePlaylist2-Bridging-Header.h */,
-				D30252641F29A16E00A144CB /* Soundtrack1.mp3 */,
 			);
 			path = CollaborativePlaylist2;
 			sourceTree = "<group>";
@@ -226,6 +225,7 @@
 				D3CB67831F17E558005D9D81 /* PlaylistCell.swift */,
 				D3CB67881F17F66C005D9D81 /* addedSongCell.swift */,
 				D3490BB11F2FD6C8004BFFD0 /* SpotifySongsCell.swift */,
+				D324C8C21F33B99B00F4FB64 /* JoinSpotifySongsCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -300,7 +300,6 @@
 				D31D91921F16A8CA00F6AE91 /* Info.plist in Resources */,
 				D31D918C1F16A87700F6AE91 /* LaunchScreen.storyboard in Resources */,
 				D3CB67761F16E297005D9D81 /* GoogleService-Info.plist in Resources */,
-				D30252651F29A16E00A144CB /* Soundtrack1.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -374,6 +373,7 @@
 				D3CB67891F17F66C005D9D81 /* addedSongCell.swift in Sources */,
 				D3CB67821F17DCBF005D9D81 /* DisplayPlaylistViewController.swift in Sources */,
 				D3CB677D1F17360F005D9D81 /* Constants.swift in Sources */,
+				D324C8C31F33B99B00F4FB64 /* JoinSpotifySongsCell.swift in Sources */,
 				D3CB67741F16CE51005D9D81 /* CreateUsernameViewController.swift in Sources */,
 				D31D91761F16A4A400F6AE91 /* AppDelegate.swift in Sources */,
 				D37FDC481F1D7D5200C1F50B /* PlaylistService.swift in Sources */,

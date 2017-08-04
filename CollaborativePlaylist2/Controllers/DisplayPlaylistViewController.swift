@@ -23,7 +23,7 @@ class DisplayPlaylistViewController: UIViewController, SPTAudioStreamingPlayback
     @IBOutlet weak var accessCodeLabel: UILabel!
     
     var player = SPTAudioStreamingController.sharedInstance()
-    let dispatchGroup = DispatchGroup()
+    let queue = DispatchQueue(label: "serial")
     
     var playAllSongs = [String]()
     @IBAction func playSongsButton(_ sender: Any) {
@@ -33,16 +33,31 @@ class DisplayPlaylistViewController: UIViewController, SPTAudioStreamingPlayback
         
         for song in playAllSongs {
             
-            self.player?.playSpotifyURI(song, startingWith: 0, startingWithPosition: 0, callback: { (error) in
-                if (error == nil) {
-                    print("playing!")
-                } else {
-                    print("error")
-                    print(error!.localizedDescription)
-                }
+                self.player?.queueSpotifyURI(song, callback: { (error) in
+                    print("hello")
+                })
+            queue.async {
+                self.player?.queueSpotifyURI(song, callback: { (error) in
+                    if (error == nil) {
+                        self.queue.async {
+                            self.player?.playSpotifyURI(song, startingWith: 0, startingWithPosition: 0, callback: { (error) in
+                                if (error == nil) {
+                                    print("playing!")
+                    
+                                } else {
+                                    print("song error")
+                                    print(error!.localizedDescription)
+                        
+                                }
             
-            })
-        
+                            })
+                        }
+                    } else {
+                        print("queue error")
+                    }
+                   
+                })
+            }
             
         }
         
@@ -127,6 +142,10 @@ extension DisplayPlaylistViewController {
             
             return cell
         })
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("kdjhgiuesgfurgeiugui \(indexPath.row)")
     }
 }
 

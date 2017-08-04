@@ -15,7 +15,8 @@ final class FirebaseQueryService {
     
     func getSongs(for playlist: Playlist) -> DatabaseQuery? {
         guard let playlistId = playlist.id else { return nil }
-        let query = db.child("music/\(playlistId)").queryOrdered(byChild: "name")
+        let query = db.child("music/\(playlistId)")
+            //.queryOrdered(byChild: "name")
         return query
     }
     

@@ -31,7 +31,7 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
     
     var auth = SPTAuth.defaultInstance()!
     var session:SPTSession!
-    var player: SPTAudioStreamingController?
+    
     var loginUrl: URL?
     
     @IBOutlet weak var tableView: UITableView!
@@ -53,11 +53,13 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
 //            updateAfterFirstLogin()
 //            player = SPTAudioStreamingController.sharedInstance()
 //        }else {
+        
             setup()
             NotificationCenter.default.addObserver(self, selector: #selector(ListSpotifyMusicViewController.updateAfterFirstLogin), name: NSNotification.Name(rawValue: "loginSuccessfull"), object: nil)
+
+       
+
         
-    
-            player = SPTAudioStreamingController.sharedInstance()
 //        }
        
     }
@@ -76,7 +78,7 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SpotifySongsCell") as! SpotifySongsCell
         //let cell = tableView.dequeueReusableCell(withIdentifier: "songsTableViewCell", for: indexPath) as! songsTableViewCell
-        print("what's uppppppp")
+//        print("what's uppppppp")
         let songSelection = songSelections[indexPath.row]
         cell.nameLabel.text = songSelection.post.name
         cell.mainImageView.image = songSelection.post.mainImage
@@ -123,10 +125,11 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
     
     
     func initializePlayer(authSession:SPTSession){
-        self.player!.playbackDelegate = self
-        self.player!.delegate = self
+        var player: SPTAudioStreamingController?
+        player!.playbackDelegate = self
+        player!.delegate = self
         try! player?.start(withClientId: auth.clientID)
-        self.player!.login(withAccessToken: authSession.accessToken)
+        player!.login(withAccessToken: authSession.accessToken)
     
         Spartan.authorizationToken = session.accessToken
         print("hello")
@@ -159,6 +162,7 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
         }, failure: { (error) in
             print(error)
         })
+        player = SPTAudioStreamingController.sharedInstance()
     }
 
     private func createSong(post: Post, playlist: Playlist, trackId: String) {
