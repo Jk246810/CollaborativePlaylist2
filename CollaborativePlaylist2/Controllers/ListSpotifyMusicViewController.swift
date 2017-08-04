@@ -31,7 +31,7 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
     
     var auth = SPTAuth.defaultInstance()!
     var session:SPTSession!
-    
+    var player: SPTAudioStreamingController?
     var loginUrl: URL?
     
     @IBOutlet weak var tableView: UITableView!
@@ -53,14 +53,19 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
 //            updateAfterFirstLogin()
 //            player = SPTAudioStreamingController.sharedInstance()
 //        }else {
-        
-            setup()
+        setup()
+        print("auth session \(self.auth.session)")
+        if (SPTAuth().session == nil) {
+            
             NotificationCenter.default.addObserver(self, selector: #selector(ListSpotifyMusicViewController.updateAfterFirstLogin), name: NSNotification.Name(rawValue: "loginSuccessfull"), object: nil)
-
-       
-
         
-//        }
+    
+            player = SPTAudioStreamingController.sharedInstance()
+            
+        } else {
+            LoginToSpotify.isHidden = true
+            print("auth session 2 \(self.auth.session)")
+        }
        
     }
     
@@ -125,11 +130,12 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
     
     
     func initializePlayer(authSession:SPTSession){
-        var player: SPTAudioStreamingController?
-        player!.playbackDelegate = self
-        player!.delegate = self
-        try! player?.start(withClientId: auth.clientID)
-        player!.login(withAccessToken: authSession.accessToken)
+        if self.player == nil {
+            self.player!.playbackDelegate = self
+            self.player!.delegate = self
+            try! player?.start(withClientId: auth.clientID)
+            self.player!.login(withAccessToken: authSession.accessToken)
+        }
     
         Spartan.authorizationToken = session.accessToken
         print("hello")
@@ -162,7 +168,6 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
         }, failure: { (error) in
             print(error)
         })
-        player = SPTAudioStreamingController.sharedInstance()
     }
 
     private func createSong(post: Post, playlist: Playlist, trackId: String) {
