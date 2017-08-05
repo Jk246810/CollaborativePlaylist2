@@ -49,7 +49,7 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        NotificationCenter.default.addObserver(self, selector: #selector(ListSpotifyMusicViewController.initializePlayer), name: NSNotification.Name(rawValue: "sessionUpdated"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ListSpotifyMusicViewController.authSessionUpdated), name: NSNotification.Name(rawValue: "sessionUpdated"), object: nil)
 
         player = SPTAudioStreamingController.sharedInstance()
     
@@ -86,14 +86,14 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
         
     }
 
+    func authSessionUpdated() {
+        let auth = SPTAuth.defaultInstance()
 
-    
-    func setup() {
-        auth = SPTAuth.defaultInstance()
-        auth.clientID = "27094f14e3b842d28bdffcc9d3f5d863"
-        auth.redirectURL = URL(string: "collaborativePlaylist2://")
-        auth.requestedScopes = [SPTAuthStreamingScope, SPTAuthUserLibraryReadScope, SPTAuthUserReadPrivateScope, SPTAuthUserLibraryModifyScope]
-        loginUrl = auth.spotifyWebAuthenticationURL()
+        if (auth?.session.isValid())! {
+            self.LoginToSpotify.isHidden = true
+
+            initializePlayer(authSession: auth!.session)
+        }
     }
 
     func initializePlayer(authSession:SPTSession){
@@ -126,7 +126,8 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
                     let selection = SongSelection(post: post, track: track)
                     
                     let trackId = selection.track.id
-                    
+
+                    // You should be careful with this guard, if the playlist isn't set, the screen will be empty. Make sure your playlist is valid, otherwise show an error.
                     guard let playlist = self.playlist else {
                         return
                     }

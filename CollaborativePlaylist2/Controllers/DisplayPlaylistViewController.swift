@@ -155,6 +155,8 @@ extension DisplayPlaylistViewController {
                 let listSpotifyMusicViewController = segue.destination as! ListSpotifyMusicViewController
                 
                 if isNewPlaylist {
+                    // I think you should only push to this ListSpotifyMusicViewController once you have fetched the playlist.
+                    // Right now, even if you don't have a playlist, you push to the next screen, and your screen will be blank if the playlist fetching fails.
                     PlaylistService.I.create(playlistName: playlistNameTextField.text ?? "") { playlist in
                         listSpotifyMusicViewController.playlist = playlist
                         listSpotifyMusicViewController.playlist?.playlistName = self.playlistNameTextField.text ?? ""
