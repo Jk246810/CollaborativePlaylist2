@@ -30,7 +30,6 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
 
     
     var auth = SPTAuth.defaultInstance()!
-    var session:SPTSession!
     var player: SPTAudioStreamingController?
     var loginUrl: URL?
     
@@ -39,7 +38,7 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
     @IBOutlet weak var LoginToSpotify: UIButton!
     
     @IBAction func LoginToSpotifyButtonTapped(_ sender: UIButton) {
-        if UIApplication.shared.openURL(loginUrl!) {
+        if UIApplication.shared.openURL(auth.spotifyWebAuthenticationURL()) {
             if auth.canHandle(auth.redirectURL) {
                             // To do - build in error handling
             }
@@ -49,25 +48,24 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        if self.auth.session.isValid() {
-//            updateAfterFirstLogin()
-//            player = SPTAudioStreamingController.sharedInstance()
-//        }else {
-        setup()
-        print("auth session \(self.auth.session)")
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(ListSpotifyMusicViewController.updateAfterFirstLogin), name: NSNotification.Name(rawValue: "loginSuccessfull"), object: nil)
-    
+
+        NotificationCenter.default.addObserver(self, selector: #selector(ListSpotifyMusicViewController.initializePlayer), name: NSNotification.Name(rawValue: "sessionUpdated"), object: nil)
 
         player = SPTAudioStreamingController.sharedInstance()
     
     }
     
-        // Do any additional setup after loading the view.
-    
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
+        if (auth.session != nil) {
+            if (auth.session.isValid()) {
+                self.LoginToSpotify.isHidden = true
+                initializePlayer(authSession: auth.session)
+            } else {
+                self.LoginToSpotify.isHidden = false
+            }
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -97,32 +95,7 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
         auth.requestedScopes = [SPTAuthStreamingScope, SPTAuthUserLibraryReadScope, SPTAuthUserReadPrivateScope, SPTAuthUserLibraryModifyScope]
         loginUrl = auth.spotifyWebAuthenticationURL()
     }
-    
-    
-    func updateAfterFirstLogin () {
-        
-        LoginToSpotify.isHidden = true
-        let userDefaults = UserDefaults.standard
-        
-        if let sessionObj:AnyObject = userDefaults.object(forKey: "SpotifySession") as AnyObject? {
-            
-            let sessionDataObj = sessionObj as! Data
-            let firstTimeSession = NSKeyedUnarchiver.unarchiveObject(with: sessionDataObj) as! SPTSession
-            
-            self.session = firstTimeSession
-            initializePlayer(authSession: session)
-            
-            
-            self.LoginToSpotify.isHidden = true
-            // self.loadingLabel.isHidden = false
-            
-            
-            
-        }
-    }
 
-    
-    
     func initializePlayer(authSession:SPTSession){
         self.player!.playbackDelegate = self
         self.player!.delegate = self
@@ -135,7 +108,7 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
         
         self.player!.login(withAccessToken: authSession.accessToken)
     
-        Spartan.authorizationToken = session.accessToken
+        Spartan.authorizationToken = authSession.accessToken
         print("hello")
         Spartan.loggingEnabled = true
         
@@ -154,7 +127,9 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
                     
                     let trackId = selection.track.id
                     
-                    guard let playlist = self.playlist else { return }
+                    guard let playlist = self.playlist else {
+                        return
+                    }
                     
                     if !playlist.songs.contains(trackId!) {
                         self.songSelections.append(selection)
