@@ -21,13 +21,16 @@ struct Post {
 struct SongSelection {
     let post: Post
     let track: Track
+    
+    
 }
 
 class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SPTAudioStreamingPlaybackDelegate, SPTAudioStreamingDelegate  {
     
     var songSelections = [SongSelection]()
     var playlist: Playlist?
-
+//    let tokenSwapURL = ""
+//    let tokenRefreshServiceURL = ""
     
     var auth = SPTAuth.defaultInstance()!
     var session:SPTSession!
@@ -49,17 +52,23 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        if self.auth.session.isValid() {
-//            updateAfterFirstLogin()
-//            player = SPTAudioStreamingController.sharedInstance()
-//        }else {
-        setup()
-        print("auth session \(self.auth.session)")
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(ListSpotifyMusicViewController.updateAfterFirstLogin), name: NSNotification.Name(rawValue: "loginSuccessfull"), object: nil)
-    
 
+        
+        
         player = SPTAudioStreamingController.sharedInstance()
+        if (player?.loggedIn)! {
+            updateAfterFirstLogin()
+           
+        } else {
+            setup()
+            print("auth session \(self.auth.session)")
+            
+            NotificationCenter.default.addObserver(self, selector: #selector(ListSpotifyMusicViewController.updateAfterFirstLogin), name: NSNotification.Name(rawValue: "loginSuccessfull"), object: nil)
+            
+
+        }
+        
+       
     
     }
     
@@ -68,6 +77,7 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -76,8 +86,7 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SpotifySongsCell") as! SpotifySongsCell
-        //let cell = tableView.dequeueReusableCell(withIdentifier: "songsTableViewCell", for: indexPath) as! songsTableViewCell
-//        print("what's uppppppp")
+       
         let songSelection = songSelections[indexPath.row]
         cell.nameLabel.text = songSelection.post.name
         cell.mainImageView.image = songSelection.post.mainImage
@@ -111,9 +120,10 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
             
             self.session = firstTimeSession
             initializePlayer(authSession: session)
-            
+            SpartanActions(authSession: session)
             
             self.LoginToSpotify.isHidden = true
+            
             // self.loadingLabel.isHidden = false
             
             
@@ -139,8 +149,11 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
         print("hello")
         Spartan.loggingEnabled = true
         
+    }
+    
+    func SpartanActions(authSession: SPTSession) {
         _ = Spartan.getSavedTracks(limit: 20, offset: 0, market: .us, success: {(PagingObject) in
-            print("number of playlists \(PagingObject.total)")
+           
             for item in PagingObject.items {
                 if let track = item.track, let name = track.name, let uri = track.uri {
                     let imageData = track.album.images[0]
@@ -150,22 +163,27 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
                     guard let mainImage = UIImage(data: data) else { return }
                     
                     let post = Post(mainImage: mainImage, name: name, uri: uri, mainImageURL: imageData.url)
-                    let selection = SongSelection(post: post, track: track)
                     
+                    let selection = SongSelection(post: post, track: track)
                     let trackId = selection.track.id
                     
                     guard let playlist = self.playlist else { return }
+                    
+                    
                     
                     if !playlist.songs.contains(trackId!) {
                         self.songSelections.append(selection)
                     }
                 }
             }
-
-                self.tableView.reloadData()
+            
+            
+            self.tableView.reloadData()
         }, failure: { (error) in
             print(error)
         })
+        
+
     }
 
     private func createSong(post: Post, playlist: Playlist, trackId: String) {
@@ -174,6 +192,7 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
                                   trackId: trackId)
     }
    
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
         if let identifier = segue.identifier {
@@ -189,6 +208,8 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
                     guard let displayPlaylistViewController = segue.destination as? DisplayPlaylistViewController else { return }
                     
                     displayPlaylistViewController.selectedPlaylist = playlist
+                    
+                    
                     self.createSong(post: songSelection.post,
                                     playlist: playlist,
                                     trackId: songSelection.track.id)
@@ -222,3 +243,4 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
     */
 
 }
+

@@ -144,25 +144,23 @@
                                     <outlet property="delegate" destination="rRb-zC-I1a" id="xCw-B0-YeS"/>
                                 </connections>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jQb-xO-4tQ">
-                                <rect key="frame" x="0.0" y="72" width="375" height="62"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="opY-wJ-nZX" userLabel="LoginToSpotifyButton">
+                                <rect key="frame" x="0.0" y="28" width="375" height="67"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.17986920479999999" green="0.73932868240000005" blue="0.34730637069999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="backgroundColor" red="0.17986920475959778" green="0.73932868242263794" blue="0.34730637073516846" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
                                 <state key="normal" title="Click to Access Music From Spotify">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" red="0.035297527910000001" green="0.035372033720000001" blue="0.031202593819999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="LoginToSpotifyButtonTapped:" destination="wO6-8V-XME" eventType="touchUpInside" id="4Ln-Pm-nx9"/>
-                                    <action selector="loginToSpotifyButtonTapped:" destination="rRb-zC-I1a" eventType="touchUpInside" id="BsJ-P8-P0B"/>
+                                    <action selector="loginToSpotifyButtonTapped:" destination="rRb-zC-I1a" eventType="touchUpInside" id="YDk-xL-qf1"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <outlet property="loginToSpotifyButton" destination="jQb-xO-4tQ" id="jNl-Fm-qnv"/>
+                        <outlet property="loginToSpotifyButton" destination="opY-wJ-nZX" id="qoR-b5-cfQ"/>
                         <outlet property="tableView" destination="MG5-5p-nU0" id="Tm5-oJ-9Tz"/>
                     </connections>
                 </viewController>
@@ -273,7 +271,24 @@
                                     <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="playSongsButton:" destination="U5x-ER-HPb" eventType="touchUpInside" id="fyL-FS-4OE"/>
+                                    <action selector="playAllSongsButtonTapped:" destination="U5x-ER-HPb" eventType="touchUpInside" id="W64-K7-81h"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cRN-wM-HRH">
+                                <rect key="frame" x="0.0" y="259" width="375" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.17986920475959778" green="0.73932868242263794" blue="0.34730637073516846" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                <state key="normal" title="Login To Spotify To Play Music">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="LoginToSpotifyButtonTapped:" destination="U5x-ER-HPb" eventType="touchUpInside" id="BeX-0s-G9z"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -294,7 +309,9 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="LoginToSpotify" destination="cRN-wM-HRH" id="aLM-ze-581"/>
                         <outlet property="accessCodeLabel" destination="tF4-ym-59T" id="zLt-ru-7nP"/>
+                        <outlet property="playAllSongsButton" destination="d7M-hB-wOg" id="g9J-vE-AC3"/>
                         <outlet property="playlistNameTextField" destination="6d7-5E-V6U" id="sJH-Rr-wBA"/>
                         <outlet property="tableView" destination="kZP-bR-uhb" id="N5U-mH-MWd"/>
                     </connections>
@@ -357,20 +374,20 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="62"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.17986920475959778" green="0.73932868242263794" blue="0.34730637073516846" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
                                 <state key="normal" title="Click to Access Music From Spotify">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" red="0.035297527910000001" green="0.035372033720000001" blue="0.031202593819999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="LoginToSpotifyButtonTapped:" destination="wO6-8V-XME" eventType="touchUpInside" id="YiU-mT-N55"/>
+                                    <action selector="LoginToSpotifyButtonTapped:" destination="wO6-8V-XME" eventType="touchUpInside" id="BJg-ux-sCt"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <outlet property="LoginToSpotify" destination="qw9-c1-S8h" id="aIk-jr-PdS"/>
+                        <outlet property="LoginToSpotify" destination="qw9-c1-S8h" id="VI9-6c-R3L"/>
                         <outlet property="tableView" destination="c1n-XK-5ts" id="w7d-iF-7Ev"/>
                     </connections>
                 </viewController>
