@@ -325,10 +325,12 @@ extension DisplayPlaylistViewController {
         if (auth.session != nil) {
             if (auth.session.isValid()) {
                 self.LoginToSpotify.isHidden = true
+                playAllSongsButton.isEnabled = true
                 initializePlayer(authSession: auth.session)
                 
             } else {
                 self.LoginToSpotify.isHidden = false
+                playAllSongsButton.isEnabled = true
             }
         }
 
