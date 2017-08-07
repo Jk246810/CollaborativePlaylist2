@@ -291,6 +291,32 @@
                                     <action selector="LoginToSpotifyButtonTapped:" destination="U5x-ER-HPb" eventType="touchUpInside" id="BeX-0s-G9z"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gQM-vU-U9d">
+                                <rect key="frame" x="31" y="97" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="next"/>
+                                <connections>
+                                    <action selector="nextTapped:" destination="U5x-ER-HPb" eventType="touchUpInside" id="aS7-VD-KmH"/>
+                                </connections>
+                            </button>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RA8-is-f9b">
+                                <rect key="frame" x="31" y="87" width="303" height="2"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </progressView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0wr-7x-UZt">
+                                <rect key="frame" x="16" y="97" width="26" height="13"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="7"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NeE-oI-KxG">
+                                <rect key="frame" x="315" y="97" width="26" height="13"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="7"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -313,7 +339,10 @@
                         <outlet property="accessCodeLabel" destination="tF4-ym-59T" id="zLt-ru-7nP"/>
                         <outlet property="playAllSongsButton" destination="d7M-hB-wOg" id="g9J-vE-AC3"/>
                         <outlet property="playlistNameTextField" destination="6d7-5E-V6U" id="sJH-Rr-wBA"/>
+                        <outlet property="progressBar" destination="RA8-is-f9b" id="5Tu-lf-rjh"/>
+                        <outlet property="startLabel" destination="0wr-7x-UZt" id="mYC-rX-qJ0"/>
                         <outlet property="tableView" destination="kZP-bR-uhb" id="N5U-mH-MWd"/>
+                        <outlet property="timerLabel" destination="NeE-oI-KxG" id="tpc-mI-7Y7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k7z-wp-bDn" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -15,6 +15,7 @@ struct Post {
     let name: String
     let uri: String
     let mainImageURL: String
+    let songDuration: Int
     
 }
 
@@ -33,7 +34,7 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
 //    let tokenRefreshServiceURL = ""
     
     var auth = SPTAuth.defaultInstance()!
-    var session:SPTSession!
+    
     var player: SPTAudioStreamingController?
     var loginUrl: URL?
     
@@ -42,9 +43,9 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
     @IBOutlet weak var LoginToSpotify: UIButton!
     
     @IBAction func LoginToSpotifyButtonTapped(_ sender: UIButton) {
-        if UIApplication.shared.openURL(loginUrl!) {
+        if UIApplication.shared.openURL(auth.spotifyWebAuthenticationURL()) {
             if auth.canHandle(auth.redirectURL) {
-                            // To do - build in error handling
+                // To do - build in error handling
             }
         }
         
@@ -52,21 +53,12 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        tableView.rowHeight = 80
         
         
+        NotificationCenter.default.addObserver(self, selector: #selector(ListSpotifyMusicViewController.initializePlayer), name: NSNotification.Name(rawValue: "sessionUpdated"), object: nil)
         player = SPTAudioStreamingController.sharedInstance()
-        if (player?.loggedIn)! {
-            updateAfterFirstLogin()
-           
-        } else {
-            setup()
-            print("auth session \(self.auth.session)")
-            
-            NotificationCenter.default.addObserver(self, selector: #selector(ListSpotifyMusicViewController.updateAfterFirstLogin), name: NSNotification.Name(rawValue: "loginSuccessfull"), object: nil)
-            
-
-        }
+        
         
        
     
@@ -77,7 +69,15 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        if (auth.session != nil) {
+            if (auth.session.isValid()) {
+                self.LoginToSpotify.isHidden = true
+                initializePlayer(authSession: auth.session)
+                
+            } else {
+                self.LoginToSpotify.isHidden = false
+            }
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -97,7 +97,17 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
         
     }
 
-
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let lastItem = songSelections.count - 1
+        if indexPath.row == lastItem {
+            //request more information
+        }
+    }
+    
+    func loadMoreSongs() {
+        
+    }
     
     func setup() {
         auth = SPTAuth.defaultInstance()
@@ -108,28 +118,7 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
     }
     
     
-    func updateAfterFirstLogin () {
-        
-        LoginToSpotify.isHidden = true
-        let userDefaults = UserDefaults.standard
-        
-        if let sessionObj:AnyObject = userDefaults.object(forKey: "SpotifySession") as AnyObject? {
-            
-            let sessionDataObj = sessionObj as! Data
-            let firstTimeSession = NSKeyedUnarchiver.unarchiveObject(with: sessionDataObj) as! SPTSession
-            
-            self.session = firstTimeSession
-            initializePlayer(authSession: session)
-            SpartanActions(authSession: session)
-            
-            self.LoginToSpotify.isHidden = true
-            
-            // self.loadingLabel.isHidden = false
-            
-            
-            
-        }
-    }
+ 
 
     
     
@@ -145,24 +134,28 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
         
         self.player!.login(withAccessToken: authSession.accessToken)
     
-        Spartan.authorizationToken = session.accessToken
+        Spartan.authorizationToken = authSession.accessToken
         print("hello")
         Spartan.loggingEnabled = true
+        SpartanActions()
         
     }
+
     
-    func SpartanActions(authSession: SPTSession) {
-        _ = Spartan.getSavedTracks(limit: 20, offset: 0, market: .us, success: {(PagingObject) in
+    func SpartanActions() {
+        _ = Spartan.getSavedTracks(limit: 50, offset: 0, market: .us, success: {(pagingObject) in
            
-            for item in PagingObject.items {
+            for item in pagingObject.items {
                 if let track = item.track, let name = track.name, let uri = track.uri {
                     let imageData = track.album.images[0]
+                    guard let duration = track.durationMs else { return }
                     
                     guard let url = URL(string: imageData.url) else { return }
                     guard let data = try? Data(contentsOf: url) else { return }
                     guard let mainImage = UIImage(data: data) else { return }
                     
-                    let post = Post(mainImage: mainImage, name: name, uri: uri, mainImageURL: imageData.url)
+                    
+                    let post = Post(mainImage: mainImage, name: name, uri: uri, mainImageURL: imageData.url, songDuration: duration)
                     
                     let selection = SongSelection(post: post, track: track)
                     let trackId = selection.track.id
@@ -170,11 +163,13 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
                     guard let playlist = self.playlist else { return }
                     
                     
-                    
                     if !playlist.songs.contains(trackId!) {
                         self.songSelections.append(selection)
                     }
+                    
                 }
+                
+                
             }
             
             

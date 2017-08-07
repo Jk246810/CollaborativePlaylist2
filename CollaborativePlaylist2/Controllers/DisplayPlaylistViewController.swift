@@ -19,7 +19,7 @@ import AVFoundation
 class DisplayPlaylistViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, SPTAudioStreamingDelegate {
     
     
-    var session: SPTSession!
+   
     var auth = SPTAuth.defaultInstance()!
     var player: SPTAudioStreamingController?
     var loginUrl: URL?
@@ -28,7 +28,20 @@ class DisplayPlaylistViewController: UIViewController, SPTAudioStreamingPlayback
     let queue = DispatchQueue(label: "serial")
     var playAllSongs = [String]()
     var selectedPlaylist: Playlist?
-    var listMusic = [Music?]()
+    var listMusic: [Music?] = []
+
+    
+    var isPaused = true
+    var currentPoseIndex = 0.00
+    var timer = Timer()
+    var count = 0
+    var trackDuration = 0
+    var fullTrackDuration = 0
+    var indexProgressBar = 0.00
+    
+    var playIndex: Int = 0 // index of current playing track
+    var furthestIndex : Int = 0
+
     
     fileprivate var dataSource: FUITableViewDataSource? // step 1
     fileprivate var songsQuery: DatabaseQuery? // step2 + querty in FirebaseQueryService (same as getSongs)
@@ -36,7 +49,10 @@ class DisplayPlaylistViewController: UIViewController, SPTAudioStreamingPlayback
     var isNewPlaylist: Bool{
         return self.selectedPlaylist == nil
     }
+    @IBOutlet weak var startLabel: UILabel!
+    @IBOutlet weak var timerLabel: UILabel!
 
+    @IBOutlet weak var progressBar: UIProgressView!
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var playlistNameTextField: UITextField!
@@ -46,18 +62,64 @@ class DisplayPlaylistViewController: UIViewController, SPTAudioStreamingPlayback
     
     
     
+    @IBAction func nextTapped(_ sender: Any) {
+        playAllSongsButton.isSelected = true
+        timer.invalidate()
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(DisplayPlaylistViewController.updateTimer), userInfo: nil, repeats: true)
+        
+        let tracks = listMusic
+        
+        if !tracks.isEmpty {
+            if playIndex == tracks.count - 1 {
+                player?.skipNext(printError(_:))
+                
+            } else {
+                incrementPlayIndex()
+                guard let track = listMusic[playIndex] else {return}
+                self.trackDuration = track.length / 1000
+                self.fullTrackDuration = track.length / 1000
+                indexProgressBar = 0
+                player?.playSpotifyURI(tracks[playIndex]?.uri, startingWith: 0, startingWithPosition: 0, callback: printError(_:))
+                
+                
+//                 player?.playSpotifyURI(tracks[playIndex]?.uri, startingWith: 0, startingWithPosition: 0, callback: printError(_:))
+
+            }
+        }
+    }
     
     
     
 //Mark: - Button Actions
    
     @IBAction func playAllSongsButtonTapped(_ sender: UIButton) {
-        audioStreaming()
-        print("stfu \(String(describing: player?.loggedIn))")
+//        audioStreaming()
+        playAllSongsButton.isSelected = !playAllSongsButton.isSelected
+        
+        if playAllSongsButton.isSelected {
+            isPaused = false
+            runTimer()
+        }else{
+            isPaused = true
+            timer.invalidate()
+        }
+        
+        if !listMusic.isEmpty {
+            if let playbackState = player?.playbackState {
+                let resume = !playbackState.isPlaying
+                player?.setIsPlaying(resume, callback: printError(_:))
+            }else {
+                player?.playSpotifyURI(listMusic[playIndex]?.uri, startingWith: 0, startingWithPosition: 0, callback: printError(_:))
+                print("the song is playing")
+            }
+                
+            
+        }else{
+            print("no tracks to play")
+        }
+        
     }
 
-
-    
     @IBAction func doneTapped(_ sender: UIBarButtonItem) {
         if isNewPlaylist {
             PlaylistService.I.create(playlistName: playlistNameTextField.text ?? "")
@@ -74,7 +136,7 @@ class DisplayPlaylistViewController: UIViewController, SPTAudioStreamingPlayback
     @IBOutlet weak var LoginToSpotify: UIButton!
     
     @IBAction func LoginToSpotifyButtonTapped(_ sender: UIButton) {
-        if UIApplication.shared.openURL(loginUrl!) {
+        if UIApplication.shared.openURL(auth.spotifyWebAuthenticationURL()) {
             if auth.canHandle(auth.redirectURL) {
                 // To do - build in error handling
             }
@@ -89,16 +151,7 @@ class DisplayPlaylistViewController: UIViewController, SPTAudioStreamingPlayback
 //MARK: - Audio
     
     func audioStreaming() {
-        //        _ = Spartan.getAudioAnaylsis(trackId: "2ZyuwVvV6Z3XJaXIFbspeE", success: { (AudioAnalysis) in
-        //            let trackInfo = AudioAnalysis.track
-        //            let trackDuration = trackInfo?.duration
-        //            print("bob is a sponge \(trackDuration)")
-        //
-        //
-        //        }, failure:  { (error) in
-        //            print(error)
-        //
-        //        })
+       
         for song in playAllSongs {
             
             self.player?.queueSpotifyURI(song, callback: { (error) in
@@ -136,6 +189,119 @@ class DisplayPlaylistViewController: UIViewController, SPTAudioStreamingPlayback
     
 }
 
+//Mark: Testing the Pause and Play 
+extension DisplayPlaylistViewController {
+    func runTimer () {
+        getNextPoseData()
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self,   selector: (#selector(DisplayPlaylistViewController.updateTimer)), userInfo: nil, repeats: true)
+        
+    }
+    
+    func printError(_ error: Error?) {
+        if let error = error {
+            print(error.localizedDescription)
+        }
+    }
+    
+    func updateTimer () {
+        let songs = listMusic
+        if songs.isEmpty {
+            return
+        }
+        count = count + 1
+        //        if count >= 4 {
+        //            UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseOut, animations: {
+        //                self.timerLabel.alpha = 0.0
+        //                self.startTimer.alpha = 0.0
+        //            }, completion: {
+        //                finished in
+        //            })
+        
+        if trackDuration <= 0 {
+            guard let track = listMusic[playIndex] else {return}
+            self.trackDuration = (track.length) / 1000
+            self.fullTrackDuration = (track.length) / 1000
+        } else {
+            trackDuration = trackDuration - 1
+            if indexProgressBar != 0 && indexProgressBar == Double(fullTrackDuration) {
+                getNextPoseData()
+                indexProgressBar = 0
+                if !listMusic.isEmpty {
+                    if playIndex == listMusic.count - 1 {
+                       player?.skipNext(printError(_:))
+                    } else {
+                        currentPoseIndex = 0
+                        incrementPlayIndex()
+                        guard let track = listMusic[playIndex] else {return}
+                        self.trackDuration = track.length / 1000
+                        self.fullTrackDuration = track.length / 1000
+                        player?.playSpotifyURI(listMusic[playIndex]?.uri, startingWith: 0, startingWithPosition: 0, callback: printError(_:))
+                        tableView.reloadData()
+//                        fadeIn()
+//                        loadAlbumDisplays()
+                    }
+                }
+            }
+            
+            progressBar.progress = Float(indexProgressBar)/Float(fullTrackDuration-1)
+            indexProgressBar += 1
+        }
+        
+        let (_,m, s) = secondsToHoursMinutesSeconds (seconds: trackDuration)
+        let (_,min, sec) = secondsToHoursMinutesSeconds (seconds: Int(indexProgressBar))
+        if s < 10  {
+            timerLabel.text = "0\(m):0\(s)" // updates the label            startTimer.text = "0\(min):0\(sec)"
+        } else {
+            timerLabel.text = "0\(m):\(s)"
+            startLabel.text = "0\(min):\(sec)"
+        }
+        if sec < 10  {
+            startLabel.text = "0\(min):0\(sec)"
+        } else {
+            startLabel.text = "0\(min):\(sec)"
+        }
+    
+    
+    }
+    
+    func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int, Int) {
+        return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
+    }
+    
+    func printSecondsToHoursMinutesSeconds (seconds:Int) -> () {
+        let (h, m, s) = secondsToHoursMinutesSeconds (seconds: trackDuration)
+        print ("\(h) Hours, \(m) Minutes, \(s) Seconds")
+    }
+    
+    func getNextPoseData() {
+        currentPoseIndex += 1
+        print("bye \(currentPoseIndex)")
+        
+    }
+    
+    func incrementPlayIndex() {
+        if furthestIndex == playIndex {
+            furthestIndex += 1
+        }
+        playIndex += 1
+    }
+    func decrementPlayIndex() {
+        playIndex -= 1
+        
+    }
+    
+    func setProgressBar() {
+        if indexProgressBar == Double(trackDuration) {
+            getNextPoseData()
+            // reset the progress counter
+            indexProgressBar = 0
+        }
+        indexProgressBar += 1
+    
+    
+    }
+}
+
 
 //MARK: - Life cycle
 extension DisplayPlaylistViewController {
@@ -144,21 +310,15 @@ extension DisplayPlaylistViewController {
         super.viewDidLoad()
         self.playAllSongsButton.isEnabled = false
         tableView.rowHeight = 80
+        
         setupDataSource()
+        
+         NotificationCenter.default.addObserver(self, selector: #selector(DisplayPlaylistViewController.initializePlayer), name: NSNotification.Name(rawValue: "sessionUpdated"), object: nil)
         
         player = SPTAudioStreamingController.sharedInstance()
         
-        if (player?.loggedIn)! {
-            updateAfterFirstLogin()
-            
-        } else {
-            setup()
-            print("auth session \(self.auth.session)")
-            
-            NotificationCenter.default.addObserver(self, selector: #selector(DisplayPlaylistViewController.updateAfterFirstLogin), name: NSNotification.Name(rawValue: "loginSuccessfull"), object: nil)
-            
-            
-        }
+        
+        setProgressBar()
         
     }
     
@@ -172,6 +332,16 @@ extension DisplayPlaylistViewController {
         if let playlist = selectedPlaylist {
             playlistNameTextField.text = playlist.playlistName
         }
+        if (auth.session != nil) {
+            if (auth.session.isValid()) {
+                self.LoginToSpotify.isHidden = true
+                initializePlayer(authSession: auth.session)
+                
+            } else {
+                self.LoginToSpotify.isHidden = false
+            }
+        }
+
     }
 }
 
@@ -191,6 +361,11 @@ extension DisplayPlaylistViewController {
             if let song = Music(snapshot: snapshot) {
                 self.playAllSongs.append(song.uri)
                 print(song)
+                self.listMusic.append(song)
+                
+                
+                
+                
                 
                 cell.songNameLabel.text = song.name
                 let imageURL = URL(string: song.mainImage)
@@ -255,34 +430,13 @@ extension DisplayPlaylistViewController {
         
         self.player!.login(withAccessToken: authSession.accessToken)
         
-        Spartan.authorizationToken = session.accessToken
+        Spartan.authorizationToken = authSession.accessToken
         print("hello")
         Spartan.loggingEnabled = true
         
     }
     
-    func updateAfterFirstLogin () {
-        
-        LoginToSpotify.isHidden = true
-        self.playAllSongsButton.isEnabled = true
-        
-        let userDefaults = UserDefaults.standard
-        
-        if let sessionObj:AnyObject = userDefaults.object(forKey: "SpotifySession") as AnyObject? {
-            
-            let sessionDataObj = sessionObj as! Data
-            let firstTimeSession = NSKeyedUnarchiver.unarchiveObject(with: sessionDataObj) as! SPTSession
-            
-            self.session = firstTimeSession
-            initializePlayer(authSession: session)
-            
-            self.LoginToSpotify.isHidden = true
-            self.playAllSongsButton.isEnabled = true
-            // self.loadingLabel.isHidden = false
-            
-            
-        }
-    }
+    
 
 
     
