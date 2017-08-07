@@ -15,6 +15,7 @@ struct Music {
     let name: String!
     let uri: String!
 //    let accessCode: String
+    let length: Int
     let user: User
     
     
@@ -27,9 +28,11 @@ extension Music {
             let uri = dict["uri"] as? String,
             let name = dict["name"] as? String,
             let mainImage = dict["mainImage"] as? String,
+            let length = dict["length"] as? Int,
             let userDict = dict["user"] as? [String: Any],
             let uid = userDict["uid"] as? String,
             let username = userDict["username"] as? String
+        
 ////
 ////
             else{ return nil }
@@ -37,6 +40,7 @@ extension Music {
           self.uri = uri
           self.name = name
           self.mainImage = mainImage
+          self.length = length
 //          self.accessCode = snapshot.key
           self.user = User(uid: uid, username: username)
         
@@ -51,6 +55,7 @@ extension Music {
           dict["uri"] = uri
           dict["name"] = name
           dict["mainImage"] = mainImage
+          dict["length"] = length
           dict["user"] = user.toDicitionary()
 //          dict["accessCode"] = accessCode
         

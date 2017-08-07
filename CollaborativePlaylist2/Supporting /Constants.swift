@@ -12,8 +12,8 @@ struct Constants {
     //storing spotify information for the credentials 
     static let clientID = "27094f14e3b842d28bdffcc9d3f5d863"
     static let redirectURL = URL(string: "collaborativePlaylist2://")!
-    static let sessionUserDefaultsKey = "SpotifySession"
-
+    static let sessionUserDefaultsKey = "spotifySession"
+    
     
     struct Segue {
         static let toCreateUsername = "toCreateUsername"

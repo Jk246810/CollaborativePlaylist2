@@ -25,6 +25,7 @@ struct MusicService {
         let music = Music(mainImage: post.mainImageURL,
                           name: post.name,
                           uri: post.uri,
+                          length: post.songDuration,
                           user: currentUser)
         
         var childUpdates = [String: Any]()

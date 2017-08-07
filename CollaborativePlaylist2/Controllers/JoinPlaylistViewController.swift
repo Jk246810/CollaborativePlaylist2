@@ -17,40 +17,49 @@ class JoinPlaylistViewController: UIViewController, UITableViewDelegate, UITable
     var playlist : Playlist?
     
     var auth = SPTAuth.defaultInstance()!
-    var session:SPTSession!
     var player: SPTAudioStreamingController?
     var loginUrl: URL?
     
+
     @IBOutlet weak var loginToSpotifyButton: UIButton!
     
     @IBOutlet weak var tableView: UITableView!
     
+   
     
     @IBAction func loginToSpotifyButtonTapped(_ sender: UIButton) {
-        if UIApplication.shared.openURL(loginUrl!) {
+        if UIApplication.shared.openURL(auth.spotifyWebAuthenticationURL()) {
             if auth.canHandle(auth.redirectURL) {
                 // To do - build in error handling
             }
         }
         
     }
-    
+  
     
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.rowHeight = 80
         
-        setup()
-        NotificationCenter.default.addObserver(self, selector: #selector(JoinPlaylistViewController.updateAfterFirstLogin), name: NSNotification.Name(rawValue: "loginSuccessfull"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(JoinPlaylistViewController.initializePlayer), name: NSNotification.Name(rawValue: "loginSuccessfull"), object: nil)
+        
         player = SPTAudioStreamingController.sharedInstance()
-        //        }
 
-        // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        if (auth.session != nil) {
+            if (auth.session.isValid()) {
+                self.loginToSpotifyButton.isHidden = true
+                initializePlayer(authSession: auth.session)
+                
+            } else {
+                self.loginToSpotifyButton.isHidden = false
+            }
+        }
     }
     
     
@@ -64,7 +73,6 @@ class JoinPlaylistViewController: UIViewController, UITableViewDelegate, UITable
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "JoinSpotifySongsCell") as! JoinSpotifySongsCell
         
-        print("what's uppppppp")
         let songSelection = songSelections[indexPath.row]
         cell.nameLabel.text = songSelection.post.name
         cell.mainImageView.image = songSelection.post.mainImage
@@ -85,59 +93,24 @@ class JoinPlaylistViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     
-    func updateAfterFirstLogin () {
-        
-       loginToSpotifyButton.isHidden = true
-        let userDefaults = UserDefaults.standard
-        
-        if let sessionObj:AnyObject = userDefaults.object(forKey: "SpotifySession") as AnyObject? {
-            
-            let sessionDataObj = sessionObj as! Data
-            let timeSession = NSKeyedUnarchiver.unarchiveObject(with: sessionDataObj) as! SPTSession
-            
-            self.session = timeSession
-            initializePlayer(authSession: session)
-            
-            
-            self.loginToSpotifyButton.isHidden = true
-            // self.loadingLabel.isHidden = false
-            
-            
-            
-        }
-    }
     
-
-    func initializePlayer(authSession:SPTSession){
-        self.player!.playbackDelegate = self
-        self.player!.delegate = self
-        do {
-            try player?.start(withClientId: auth.clientID)
-        } catch {
-            print("error")
-        }
-
-        self.player!.login(withAccessToken: authSession.accessToken)
-        
-        Spartan.authorizationToken = session.accessToken
-        print("hello")
-        Spartan.loggingEnabled = true
-        
-        _ = Spartan.getSavedTracks(limit: 20, offset: 0, market: .us, success: {(PagingObject) in
+    
+    func spartanRequest () {
+        _ = Spartan.getSavedTracks(limit: 50, offset: 0, market: .us, success: {(PagingObject) in
             print("number of playlists \(PagingObject.total)")
             for item in PagingObject.items {
                 if let track = item.track, let name = track.name, let uri = track.uri {
                     let imageData = track.album.images[0]
-                    
+                    guard let duration = track.durationMs else { return }
                     guard let url = URL(string: imageData.url) else { return }
                     guard let data = try? Data(contentsOf: url) else { return }
                     guard let mainImage = UIImage(data: data) else { return }
                     
-                    let post = Post(mainImage: mainImage, name: name, uri: uri, mainImageURL: imageData.url)
+                    let post = Post(mainImage: mainImage, name: name, uri: uri, mainImageURL: imageData.url, songDuration: duration)
                     let selection = SongSelection(post: post, track: track)
                     
                     let trackId = selection.track.id
-                    print(self.playlist)
+                    //print(self.playlist)
                     guard let playlist = self.playlist else { return }
                     
                     if !playlist.songs.contains(trackId!) {
@@ -151,6 +124,25 @@ class JoinPlaylistViewController: UIViewController, UITableViewDelegate, UITable
         }, failure: { (error) in
             print(error)
         })
+    }
+
+    func initializePlayer(authSession:SPTSession){
+        self.player!.playbackDelegate = self
+        self.player!.delegate = self
+        do {
+            try player?.start(withClientId: auth.clientID)
+        } catch {
+            print("error")
+        }
+
+        self.player!.login(withAccessToken: authSession.accessToken)
+        
+        Spartan.authorizationToken = authSession.accessToken
+        print("hello")
+        Spartan.loggingEnabled = true
+        spartanRequest()
+    
+
     }
 
     private func createSong(post: Post, playlist: Playlist, trackId: String) {

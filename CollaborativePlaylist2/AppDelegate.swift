@@ -13,14 +13,12 @@ import Firebase
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
-    
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
-
+        
         let auth = SPTAuth.defaultInstance()
-
         auth?.clientID = Constants.clientID
         auth?.requestedScopes = [SPTAuthStreamingScope, SPTAuthUserLibraryReadScope, SPTAuthUserReadPrivateScope, SPTAuthUserLibraryModifyScope]
         auth?.redirectURL = Constants.redirectURL
@@ -29,12 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
-    
-       
-    
-    
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
-
+        // 2- check if app can handle redirect URL
         let auth = SPTAuth.defaultInstance()
 
         if (auth?.canHandle(auth?.redirectURL))! {
@@ -46,17 +40,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     let sessionData = NSKeyedArchiver.archivedData(withRootObject: session!)
                     userDefaults.set(sessionData, forKey: "SpotifySession")
                     userDefaults.synchronize()
-                    
                     auth?.session = session
                 }
                 NotificationCenter.default.post(name: Notification.Name(rawValue: "sessionUpdated"), object: self)
             })
             return true
         }
-
         return false
     }
-
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
