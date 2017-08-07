@@ -208,15 +208,6 @@ extension DisplayPlaylistViewController {
         if songs.isEmpty {
             return
         }
-        count = count + 1
-        //        if count >= 4 {
-        //            UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseOut, animations: {
-        //                self.timerLabel.alpha = 0.0
-        //                self.startTimer.alpha = 0.0
-        //            }, completion: {
-        //                finished in
-        //            })
-        
         if trackDuration <= 0 {
             guard let track = listMusic[playIndex] else {return}
             self.trackDuration = (track.length) / 1000
@@ -237,8 +228,7 @@ extension DisplayPlaylistViewController {
                         self.fullTrackDuration = track.length / 1000
                         player?.playSpotifyURI(listMusic[playIndex]?.uri, startingWith: 0, startingWithPosition: 0, callback: printError(_:))
                         tableView.reloadData()
-//                        fadeIn()
-//                        loadAlbumDisplays()
+//
                     }
                 }
             }

@@ -30,8 +30,7 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
     
     var songSelections = [SongSelection]()
     var playlist: Playlist?
-//    let tokenSwapURL = ""
-//    let tokenRefreshServiceURL = ""
+
     
     var auth = SPTAuth.defaultInstance()!
     
