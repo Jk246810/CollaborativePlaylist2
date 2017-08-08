@@ -30,10 +30,8 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
     
     var songSelections = [SongSelection]()
     var playlist: Playlist?
-
     
     var auth = SPTAuth.defaultInstance()!
-    
     var player: SPTAudioStreamingController?
     var loginUrl: URL?
     
@@ -55,7 +53,7 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
         tableView.rowHeight = 80
         
         
-        NotificationCenter.default.addObserver(self, selector: #selector(ListSpotifyMusicViewController.initializePlayer), name: NSNotification.Name(rawValue: "sessionUpdated"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ListSpotifyMusicViewController.authSessionUpdated), name: NSNotification.Name(rawValue: "sessionUpdated"), object: nil)
         player = SPTAudioStreamingController.sharedInstance()
         
         
@@ -71,10 +69,11 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
         if (auth.session != nil) {
             if (auth.session.isValid()) {
                 self.LoginToSpotify.isHidden = true
-                initializePlayer(authSession: auth.session)
+                authSessionUpdated()
                 
             } else {
                 self.LoginToSpotify.isHidden = false
+                
             }
         }
     }
@@ -108,12 +107,14 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
         
     }
     
-    func setup() {
-        auth = SPTAuth.defaultInstance()
-        auth.clientID = "27094f14e3b842d28bdffcc9d3f5d863"
-        auth.redirectURL = URL(string: "collaborativePlaylist2://")
-        auth.requestedScopes = [SPTAuthStreamingScope, SPTAuthUserLibraryReadScope, SPTAuthUserReadPrivateScope, SPTAuthUserLibraryModifyScope]
-        loginUrl = auth.spotifyWebAuthenticationURL()
+    func authSessionUpdated() {
+       let auth = SPTAuth.defaultInstance()
+        
+        if (auth?.session.isValid())! {
+            self.LoginToSpotify.isHidden = true
+            
+            initializePlayer(authSession: auth!.session)
+        }
     }
     
     
@@ -136,14 +137,9 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
         Spartan.authorizationToken = authSession.accessToken
         print("hello")
         Spartan.loggingEnabled = true
-        SpartanActions()
-        
-    }
-
-    
-    func SpartanActions() {
+       
         _ = Spartan.getSavedTracks(limit: 50, offset: 0, market: .us, success: {(pagingObject) in
-           
+            
             for item in pagingObject.items {
                 if let track = item.track, let name = track.name, let uri = track.uri {
                     let imageData = track.album.images[0]
@@ -176,10 +172,12 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
         }, failure: { (error) in
             print(error)
         })
-        
 
+        
     }
 
+    
+    
     private func createSong(post: Post, playlist: Playlist, trackId: String) {
         MusicService.I.createSong(using: post,
                                   playlist: playlist,

@@ -43,7 +43,7 @@ class JoinPlaylistViewController: UIViewController, UITableViewDelegate, UITable
         super.viewDidLoad()
         tableView.rowHeight = 80
         
-        NotificationCenter.default.addObserver(self, selector: #selector(JoinPlaylistViewController.initializePlayer), name: NSNotification.Name(rawValue: "loginSuccessfull"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(JoinPlaylistViewController.authSessionUpdated), name: NSNotification.Name(rawValue: "loginSuccessfull"), object: nil)
         
         player = SPTAudioStreamingController.sharedInstance()
 
@@ -54,7 +54,7 @@ class JoinPlaylistViewController: UIViewController, UITableViewDelegate, UITable
         if (auth.session != nil) {
             if (auth.session.isValid()) {
                 self.loginToSpotifyButton.isHidden = true
-                initializePlayer(authSession: auth.session)
+                authSessionUpdated()
                 
             } else {
                 self.loginToSpotifyButton.isHidden = false
@@ -83,14 +83,6 @@ class JoinPlaylistViewController: UIViewController, UITableViewDelegate, UITable
         
     }
 
-    func setup() {
-        auth = SPTAuth.defaultInstance()
-        auth.clientID = "27094f14e3b842d28bdffcc9d3f5d863"
-        auth.redirectURL = URL(string: "collaborativePlaylist2://")
-        auth.requestedScopes = [SPTAuthStreamingScope, SPTAuthUserLibraryReadScope, SPTAuthUserReadPrivateScope, SPTAuthUserLibraryModifyScope]
-      
-        loginUrl = auth.spotifyWebAuthenticationURL()
-    }
     
     
     
@@ -143,6 +135,15 @@ class JoinPlaylistViewController: UIViewController, UITableViewDelegate, UITable
         spartanRequest()
     
 
+    }
+    
+    func authSessionUpdated() {
+        let auth = SPTAuth.defaultInstance()
+        
+        if (auth?.session.isValid())! {
+            self.loginToSpotifyButton.isHidden = true
+            initializePlayer(authSession: auth!.session)
+        }
     }
 
     private func createSong(post: Post, playlist: Playlist, trackId: String) {

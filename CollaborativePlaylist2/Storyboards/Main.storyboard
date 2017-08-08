@@ -206,7 +206,7 @@
                                 <color key="backgroundColor" red="0.03529752790927887" green="0.035372033715248108" blue="0.031202593818306923" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="playlistName" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6d7-5E-V6U">
-                                <rect key="frame" x="126" y="110" width="208" height="30"/>
+                                <rect key="frame" x="113" y="112" width="208" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -266,10 +266,11 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d7M-hB-wOg">
                                 <rect key="frame" x="44" y="262" width="280" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="23"/>
                                 <state key="normal" title="▶ Play All">
                                     <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <state key="selected" title="|| "/>
                                 <connections>
                                     <action selector="playAllSongsButtonTapped:" destination="U5x-ER-HPb" eventType="touchUpInside" id="W64-K7-81h"/>
                                 </connections>
@@ -292,7 +293,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gQM-vU-U9d">
-                                <rect key="frame" x="31" y="97" width="46" height="30"/>
+                                <rect key="frame" x="329" y="97" width="46" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="next"/>
                                 <connections>
@@ -317,6 +318,15 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AWr-3v-uhe">
+                                <rect key="frame" x="16" y="112" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                <state key="normal" title="previous"/>
+                                <connections>
+                                    <action selector="previousTapped:" destination="U5x-ER-HPb" eventType="touchUpInside" id="NXN-Te-bbg"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -445,6 +455,6 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="3AB-Pv-2Xz"/>
-        <segue reference="VQJ-FM-CHA"/>
+        <segue reference="NEf-HQ-MIq"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -29,6 +29,8 @@ class DisplayPlaylistViewController: UIViewController, SPTAudioStreamingPlayback
     var playAllSongs = [String]()
     var selectedPlaylist: Playlist?
     var listMusic: [Music?] = []
+    
+    var didStartPlayingMusic = false
 
     
     var isPaused = true
@@ -67,10 +69,10 @@ class DisplayPlaylistViewController: UIViewController, SPTAudioStreamingPlayback
         timer.invalidate()
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(DisplayPlaylistViewController.updateTimer), userInfo: nil, repeats: true)
         
-        let tracks = listMusic
         
-        if !tracks.isEmpty {
-            if playIndex == tracks.count - 1 {
+        
+        if !listMusic.isEmpty {
+            if playIndex == listMusic.count - 1 {
                 player?.skipNext(printError(_:))
                 
             } else {
@@ -79,40 +81,71 @@ class DisplayPlaylistViewController: UIViewController, SPTAudioStreamingPlayback
                 self.trackDuration = track.length / 1000
                 self.fullTrackDuration = track.length / 1000
                 indexProgressBar = 0
-                player?.playSpotifyURI(tracks[playIndex]?.uri, startingWith: 0, startingWithPosition: 0, callback: printError(_:))
+                player?.playSpotifyURI(listMusic[playIndex]?.uri, startingWith: 0, startingWithPosition: 0, callback: printError(_:))
                 
                 
-//                 player?.playSpotifyURI(tracks[playIndex]?.uri, startingWith: 0, startingWithPosition: 0, callback: printError(_:))
+                 
 
             }
         }
     }
     
     
+    @IBAction func previousTapped(_ sender: Any) {
+        playAllSongsButton.isSelected = true
+        timer.invalidate()
+        runTimer()
+        
+        if !listMusic.isEmpty {
+            if playIndex == 0 {
+                player?.skipPrevious(printError(_:))
+            } else {
+                decrementPlayIndex()
+                guard let track = listMusic[playIndex] else {return}
+                self.trackDuration = (track.length) / 1000
+                indexProgressBar = 0
+                self.fullTrackDuration = (track.length) / 1000
+                player?.playSpotifyURI(listMusic[playIndex]?.uri, startingWith: 0, startingWithPosition: 0, callback: printError(_:))
+            }
+        }
+        
+    }
+    
+    
+    
     
 //Mark: - Button Actions
    
     @IBAction func playAllSongsButtonTapped(_ sender: UIButton) {
-//        audioStreaming()
+        
         playAllSongsButton.isSelected = !playAllSongsButton.isSelected
         
         if playAllSongsButton.isSelected {
+            
             isPaused = false
             runTimer()
+            
         }else{
             isPaused = true
+            
             timer.invalidate()
+            
+           
         }
         
         if !listMusic.isEmpty {
-            if let playbackState = player?.playbackState {
+//            player?.playSpotifyURI(listMusic[playIndex]?.uri, startingWith: 0, startingWithPosition: 0, callback: printError(_:))
+            if let playbackState = self.player?.playbackState, didStartPlayingMusic {
+                print("here")
                 let resume = !playbackState.isPlaying
-                player?.setIsPlaying(resume, callback: printError(_:))
-            }else {
-                player?.playSpotifyURI(listMusic[playIndex]?.uri, startingWith: 0, startingWithPosition: 0, callback: printError(_:))
-                print("the song is playing")
-            }
+                self.player?.setIsPlaying(resume, callback: printError(_:))
                 
+            } else {
+                didStartPlayingMusic = true
+                self.player?.playSpotifyURI(listMusic[playIndex]?.uri, startingWith: 0, startingWithPosition: 0, callback: printError(_:))
+                print("yay its playing")
+            }
+ 
             
         }else{
             print("no tracks to play")
@@ -150,40 +183,7 @@ class DisplayPlaylistViewController: UIViewController, SPTAudioStreamingPlayback
     
 //MARK: - Audio
     
-    func audioStreaming() {
-       
-        for song in playAllSongs {
-            
-            self.player?.queueSpotifyURI(song, callback: { (error) in
-                print("hello")
-            })
-            queue.async {
-                self.player?.queueSpotifyURI(song, callback: { (error) in
-                    if (error == nil) {
-                        self.queue.async {
-                            self.player?.playSpotifyURI(song, startingWith: 0, startingWithPosition: 0, callback: { (error) in
-                                if (error == nil) {
-                                    print("playing!")
-                                    
-                                } else {
-                                    print("song error")
-                                    print(error!.localizedDescription)
-                                    
-                                }
-                                
-                            })
-                        }
-                    } else {
-                        print("queue error")
-                    }
-                    
-                })
-            }
-            
-        }
-        
-        
-    }
+    
   
   
     
@@ -208,6 +208,7 @@ extension DisplayPlaylistViewController {
         if songs.isEmpty {
             return
         }
+      
         if trackDuration <= 0 {
             guard let track = listMusic[playIndex] else {return}
             self.trackDuration = (track.length) / 1000
@@ -224,6 +225,7 @@ extension DisplayPlaylistViewController {
                         currentPoseIndex = 0
                         incrementPlayIndex()
                         guard let track = listMusic[playIndex] else {return}
+                       
                         self.trackDuration = track.length / 1000
                         self.fullTrackDuration = track.length / 1000
                         player?.playSpotifyURI(listMusic[playIndex]?.uri, startingWith: 0, startingWithPosition: 0, callback: printError(_:))
@@ -303,10 +305,11 @@ extension DisplayPlaylistViewController {
         
         setupDataSource()
         
-         NotificationCenter.default.addObserver(self, selector: #selector(DisplayPlaylistViewController.initializePlayer), name: NSNotification.Name(rawValue: "sessionUpdated"), object: nil)
+         NotificationCenter.default.addObserver(self, selector: #selector(DisplayPlaylistViewController.authSessionUpdated), name: NSNotification.Name(rawValue: "sessionUpdated"), object: nil)
         
-        player = SPTAudioStreamingController.sharedInstance()
         
+        
+      
         
         setProgressBar()
         
@@ -326,7 +329,7 @@ extension DisplayPlaylistViewController {
             if (auth.session.isValid()) {
                 self.LoginToSpotify.isHidden = true
                 playAllSongsButton.isEnabled = true
-                initializePlayer(authSession: auth.session)
+                authSessionUpdated()
                 
             } else {
                 self.LoginToSpotify.isHidden = false
@@ -334,6 +337,20 @@ extension DisplayPlaylistViewController {
             }
         }
 
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        self.player?.setIsPlaying(false, callback: { (error: Error?) in
+            do {
+                try self.player?.stop()
+            } catch {
+                print("error")
+            }
+        
+        })
+    
     }
 }
 
@@ -399,28 +416,37 @@ extension DisplayPlaylistViewController {
 //MARK: - LOGIN TO SPOTIFY
 extension DisplayPlaylistViewController {
     
-    func setup() {
-        auth = SPTAuth.defaultInstance()
-        auth.clientID = "27094f14e3b842d28bdffcc9d3f5d863"
-        auth.redirectURL = URL(string: "collaborativePlaylist2://")
-        auth.requestedScopes = [SPTAuthStreamingScope, SPTAuthUserLibraryReadScope, SPTAuthUserReadPrivateScope, SPTAuthUserLibraryModifyScope]
-        
-        loginUrl = auth.spotifyWebAuthenticationURL()
+    func authSessionUpdated() {
+       let auth = SPTAuth.defaultInstance()
+       
+        if (auth?.session.isValid())! {
+            self.LoginToSpotify.isHidden = true
+            initializePlayer(authSession: auth!.session)
+        }
     }
     
     
     
     func initializePlayer(authSession:SPTSession){
-        self.player!.playbackDelegate = self
-        self.player!.delegate = self
-        
-        do {
-            try player?.start(withClientId: auth.clientID)
-        } catch {
-            print("error")
+        if (self.player != nil) {
+            return
         }
         
-        self.player!.login(withAccessToken: authSession.accessToken)
+        self.player = SPTAudioStreamingController.sharedInstance()
+        
+        do {
+            try self.player?.start(withClientId: auth.clientID)
+            
+            self.player!.playbackDelegate = self
+            self.player!.delegate = self
+            self.player!.login(withAccessToken: authSession.accessToken)
+        } catch (let error as NSError) {
+            print(error.localizedDescription)
+            return
+        }
+        
+        
+        
         
         Spartan.authorizationToken = authSession.accessToken
         print("hello")
@@ -428,9 +454,33 @@ extension DisplayPlaylistViewController {
         
     }
     
-    
-
-
-    
 }
+
+extension DisplayPlaylistViewController {
+    func audioStreaming(_audioStreaming: SPTAudioStreamingController!, didChangePlaybackState isPlaying: Bool) {
+        print("is playing =", isPlaying);
+        if (isPlaying) {
+            activateAudioSession()
+        } else {
+            deactivateAudioSession()
+        }
+    }
+    
+    func activateAudioSession() {
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+            do {
+                try AVAudioSession.sharedInstance().setActive(true)
+            } catch {}
+        } catch {}
+    }
+    
+    func deactivateAudioSession() {
+        do {
+            try AVAudioSession.sharedInstance().setActive(false)
+            
+        } catch {}
+    }
+}
+
 
