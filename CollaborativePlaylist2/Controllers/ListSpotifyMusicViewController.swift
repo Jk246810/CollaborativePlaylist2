@@ -33,7 +33,6 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
 
     
     var auth = SPTAuth.defaultInstance()!
-    
     var player: SPTAudioStreamingController?
     var loginUrl: URL?
     
@@ -52,10 +51,11 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        NotificationCenter.default.addObserver(self, selector: #selector(ListSpotifyMusicViewController.authSessionUpdated), name: NSNotification.Name(rawValue: "sessionUpdated"), object: nil)
+
         tableView.rowHeight = 80
-        
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(ListSpotifyMusicViewController.initializePlayer), name: NSNotification.Name(rawValue: "sessionUpdated"), object: nil)
+
         player = SPTAudioStreamingController.sharedInstance()
         
         
@@ -63,16 +63,13 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
     
     }
     
-        // Do any additional setup after loading the view.
-    
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
         if (auth.session != nil) {
             if (auth.session.isValid()) {
                 self.LoginToSpotify.isHidden = true
                 initializePlayer(authSession: auth.session)
-                
             } else {
                 self.LoginToSpotify.isHidden = false
             }
@@ -96,7 +93,16 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
         
     }
 
-    
+    func authSessionUpdated() {
+        let auth = SPTAuth.defaultInstance()
+
+        if (auth?.session.isValid())! {
+            self.LoginToSpotify.isHidden = true
+
+            initializePlayer(authSession: auth!.session)
+        }
+    }
+
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let lastItem = songSelections.count - 1
         if indexPath.row == lastItem {
@@ -115,12 +121,7 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
         auth.requestedScopes = [SPTAuthStreamingScope, SPTAuthUserLibraryReadScope, SPTAuthUserReadPrivateScope, SPTAuthUserLibraryModifyScope]
         loginUrl = auth.spotifyWebAuthenticationURL()
     }
-    
-    
- 
 
-    
-    
     func initializePlayer(authSession:SPTSession){
         self.player!.playbackDelegate = self
         self.player!.delegate = self
@@ -158,8 +159,11 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
                     
                     let selection = SongSelection(post: post, track: track)
                     let trackId = selection.track.id
-                    
-                    guard let playlist = self.playlist else { return }
+
+                    // You should be careful with this guard, if the playlist isn't set, the screen will be empty. Make sure your playlist is valid, otherwise show an error.
+                    guard let playlist = self.playlist else {
+                        return
+                    }
                     
                     
                     if !playlist.songs.contains(trackId!) {
@@ -217,9 +221,6 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
 
        
     }
-
-
-
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

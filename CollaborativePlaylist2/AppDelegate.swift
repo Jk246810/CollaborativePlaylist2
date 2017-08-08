@@ -13,10 +13,8 @@ import Firebase
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
-    
     var window: UIWindow?
-    
-    
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
         
@@ -25,19 +23,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         auth?.requestedScopes = [SPTAuthStreamingScope, SPTAuthUserLibraryReadScope, SPTAuthUserReadPrivateScope, SPTAuthUserLibraryModifyScope]
         auth?.redirectURL = Constants.redirectURL
         auth?.sessionUserDefaultsKey = Constants.sessionUserDefaultsKey
-        
-
 
         return true
     }
 
-    
-       
-    
-    
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
         // 2- check if app can handle redirect URL
         let auth = SPTAuth.defaultInstance()
+
         if (auth?.canHandle(auth?.redirectURL))! {
             auth?.handleAuthCallback(withTriggeredAuthURL: url, callback: { (error, session) in
                 if (error != nil) {
@@ -53,10 +46,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             })
             return true
         }
-        
         return false
     }
-
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

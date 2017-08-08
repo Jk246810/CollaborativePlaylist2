@@ -125,12 +125,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         print(indexPath.row)
         let deletedPlaylist = playlistList[indexPath.row]
         
-        let selectedPlaylist = deletedPlaylist.id
-        let ref = Database.database().reference().child("playlists").child(selectedPlaylist!)
-        let musicRef = Database.database().reference().child("music").child(selectedPlaylist!)
+        let selectedPlaylist = deletedPlaylist.accessCode
+        let ref = Database.database().reference().child("playlists").child(selectedPlaylist)
         
         ref.removeValue()
-        musicRef.removeValue()
         self.tableView.reloadData()
     }
     
