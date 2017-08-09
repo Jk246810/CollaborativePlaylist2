@@ -16,6 +16,7 @@ import FirebaseDatabaseUI
 import AVFoundation
 
 
+
 class DisplayPlaylistViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, SPTAudioStreamingDelegate {
     
     
@@ -27,8 +28,18 @@ class DisplayPlaylistViewController: UIViewController, SPTAudioStreamingPlayback
     
     let queue = DispatchQueue(label: "serial")
     var playAllSongs = [String]()
+    
+    var listMusic: [Music?] {
+        var list = [Music]()
+        self.dataSource?.items.forEach {
+            if let song = Music(snapshot: $0) {
+                list.append(song)
+            }
+        }
+        return list
+    }
+    
     var selectedPlaylist: Playlist?
-    var listMusic: [Music?] = []
     
     var didStartPlayingMusic = false
 
@@ -43,8 +54,10 @@ class DisplayPlaylistViewController: UIViewController, SPTAudioStreamingPlayback
     
     var playIndex: Int = 0 // index of current playing track
     var furthestIndex : Int = 0
-
     
+    //animator 
+    
+       
     fileprivate var dataSource: FUITableViewDataSource? // step 1
     fileprivate var songsQuery: DatabaseQuery? // step2 + querty in FirebaseQueryService (same as getSongs)
     
@@ -58,7 +71,7 @@ class DisplayPlaylistViewController: UIViewController, SPTAudioStreamingPlayback
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var playlistNameTextField: UITextField!
-    @IBOutlet weak var accessCodeLabel: UILabel!
+    
     @IBOutlet weak var playAllSongsButton: UIButton!
     
     
@@ -74,6 +87,8 @@ class DisplayPlaylistViewController: UIViewController, SPTAudioStreamingPlayback
         if !listMusic.isEmpty {
             if playIndex == listMusic.count - 1 {
                 player?.skipNext(printError(_:))
+               
+                
                 
             } else {
                 incrementPlayIndex()
@@ -228,6 +243,8 @@ extension DisplayPlaylistViewController {
                        
                         self.trackDuration = track.length / 1000
                         self.fullTrackDuration = track.length / 1000
+                        
+                        
                         player?.playSpotifyURI(listMusic[playIndex]?.uri, startingWith: 0, startingWithPosition: 0, callback: printError(_:))
                         tableView.reloadData()
 //
@@ -302,6 +319,12 @@ extension DisplayPlaylistViewController {
         super.viewDidLoad()
         self.playAllSongsButton.isEnabled = false
         tableView.rowHeight = 80
+    //        playAllSongsButton.layer.cornerRadius = playAllSongsButton.bounds.size.width / 2.0
+//        playAllSongsButton.clipsToBounds = true
+        
+        
+        
+        
         
         setupDataSource()
         
@@ -368,11 +391,6 @@ extension DisplayPlaylistViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: "addedSongCell") as! addedSongCell
             
             if let song = Music(snapshot: snapshot) {
-                self.playAllSongs.append(song.uri)
-                print(song)
-                self.listMusic.append(song)
-                
-                
                 
                 
                 
@@ -383,10 +401,14 @@ extension DisplayPlaylistViewController {
             
             return cell
         })
+        
+        
     }
 
     
 }
+
+
 
 //MARK: - Segue
 extension DisplayPlaylistViewController {
@@ -481,6 +503,11 @@ extension DisplayPlaylistViewController {
             
         } catch {}
     }
+}
+//tap indicator 
+
+extension DisplayPlaylistViewController {
+    
 }
 
 

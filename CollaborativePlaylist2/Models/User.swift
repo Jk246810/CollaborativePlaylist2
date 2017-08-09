@@ -24,6 +24,8 @@ extension User {
         self.username = username
     }
     
+   
+    
     func toDicitionary() -> [String : Any] {
         var dict = [String:Any]()
         
@@ -33,3 +35,6 @@ extension User {
         return dict
     }
 }
+
+
+
