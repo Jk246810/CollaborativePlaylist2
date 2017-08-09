@@ -14,7 +14,7 @@ import Spartan
 import Kingfisher
 import FirebaseDatabaseUI
 import AVFoundation
-
+import NVActivityIndicatorView
 
 
 class DisplayPlaylistViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, SPTAudioStreamingDelegate {
@@ -57,7 +57,8 @@ class DisplayPlaylistViewController: UIViewController, SPTAudioStreamingPlayback
     
     //animator 
     
-       
+    //Activity indicator
+           
     fileprivate var dataSource: FUITableViewDataSource? // step 1
     fileprivate var songsQuery: DatabaseQuery? // step2 + querty in FirebaseQueryService (same as getSongs)
     
@@ -74,10 +75,14 @@ class DisplayPlaylistViewController: UIViewController, SPTAudioStreamingPlayback
     
     @IBOutlet weak var playAllSongsButton: UIButton!
     
+    @IBOutlet weak var nextButton: UIButton!
+    
+    @IBOutlet weak var currentSongImageView: UIImageView!
     
     
     
-    @IBAction func nextTapped(_ sender: Any) {
+    
+    @IBAction func nextTapped(_ sender: UIButton) {
         playAllSongsButton.isSelected = true
         timer.invalidate()
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(DisplayPlaylistViewController.updateTimer), userInfo: nil, repeats: true)
@@ -87,18 +92,20 @@ class DisplayPlaylistViewController: UIViewController, SPTAudioStreamingPlayback
         if !listMusic.isEmpty {
             if playIndex == listMusic.count - 1 {
                 player?.skipNext(printError(_:))
-               
                 
                 
-            } else {
+                
+            }else {
+                nextButton.isEnabled = true
+                nextButton.isHidden = false
                 incrementPlayIndex()
                 guard let track = listMusic[playIndex] else {return}
+                
                 self.trackDuration = track.length / 1000
                 self.fullTrackDuration = track.length / 1000
                 indexProgressBar = 0
                 player?.playSpotifyURI(listMusic[playIndex]?.uri, startingWith: 0, startingWithPosition: 0, callback: printError(_:))
-                
-                
+                loadSongDisplay()
                  
 
             }
@@ -122,6 +129,7 @@ class DisplayPlaylistViewController: UIViewController, SPTAudioStreamingPlayback
                 self.fullTrackDuration = (track.length) / 1000
                 player?.playSpotifyURI(listMusic[playIndex]?.uri, startingWith: 0, startingWithPosition: 0, callback: printError(_:))
             }
+            loadSongDisplay()
         }
         
     }
@@ -160,7 +168,8 @@ class DisplayPlaylistViewController: UIViewController, SPTAudioStreamingPlayback
                 self.player?.playSpotifyURI(listMusic[playIndex]?.uri, startingWith: 0, startingWithPosition: 0, callback: printError(_:))
                 print("yay its playing")
             }
- 
+            
+            loadSongDisplay()
             
         }else{
             print("no tracks to play")
@@ -247,6 +256,7 @@ extension DisplayPlaylistViewController {
                         
                         player?.playSpotifyURI(listMusic[playIndex]?.uri, startingWith: 0, startingWithPosition: 0, callback: printError(_:))
                         tableView.reloadData()
+                        loadSongDisplay()
 //
                     }
                 }
@@ -318,7 +328,10 @@ extension DisplayPlaylistViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.playAllSongsButton.isEnabled = false
-        tableView.rowHeight = 80
+        tableView.rowHeight = 66
+        
+        
+        
     //        playAllSongsButton.layer.cornerRadius = playAllSongsButton.bounds.size.width / 2.0
 //        playAllSongsButton.clipsToBounds = true
         
@@ -345,6 +358,8 @@ extension DisplayPlaylistViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+
         if let playlist = selectedPlaylist {
             playlistNameTextField.text = playlist.playlistName
         }
@@ -391,12 +406,15 @@ extension DisplayPlaylistViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: "addedSongCell") as! addedSongCell
             
             if let song = Music(snapshot: snapshot) {
+        
                 
+                cell.configure(with: song)
                 
+               
+            
                 
-                cell.songNameLabel.text = song.name
-                let imageURL = URL(string: song.mainImage)
-                cell.songImageView.kf.setImage(with: imageURL)
+            
+            
             }
             
             return cell
@@ -406,6 +424,28 @@ extension DisplayPlaylistViewController {
     }
 
     
+}
+
+//Mark: - Current Song Image Display
+extension DisplayPlaylistViewController {
+    func loadSongDisplay() {
+        if !listMusic.isEmpty {
+            let song = listMusic[playIndex]
+            let imageURL = URL(string: (song?.mainImage)!)
+            currentSongImageView.kf.setImage(with: imageURL)
+        }
+    }
+    
+    func fadeIn() {
+        UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseIn, animations: {
+            self.currentSongImageView.alpha = 0.0
+        }, completion: nil)
+        
+        UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseIn, animations: {
+            self.currentSongImageView.alpha = 1.0
+        }, completion: nil)
+        
+    }
 }
 
 

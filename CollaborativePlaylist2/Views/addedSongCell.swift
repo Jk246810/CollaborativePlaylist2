@@ -7,11 +7,22 @@
 //
 
 import UIKit
+import Kingfisher
+import NVActivityIndicatorView
 
 class addedSongCell: UITableViewCell {
     @IBOutlet weak var songImageView: UIImageView!
     @IBOutlet weak var songNameLabel: UILabel!
     
+    @IBOutlet weak var activityView: NVActivityIndicatorView!
+   
+    func configure(with song: Music) {
+        songNameLabel.text = song.name
+        let imageURL = URL(string: song.mainImage)
+        songImageView.kf.setImage(with: imageURL)
+    }
     
+
+
    
 }

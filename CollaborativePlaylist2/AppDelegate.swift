@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FirebaseApp.configure()
         
-        
+        configureIntitialRootViewController(for: window)
         
         let auth = SPTAuth.defaultInstance()
         auth?.clientID = Constants.clientID
@@ -87,6 +87,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 }
+
+extension AppDelegate {
+    func configureIntitialRootViewController(for window: UIWindow?) {
+        //let defaults = UserDefaults.standard
+        let initialViewController:UIViewController
+        
+        // skip the login flow if the currentuser has been set, firuser has been set
+        if Auth.auth().currentUser != nil {
+//            let userData = defaults.object(forKey: Constants.UserDefaults.currentUser) as? Data,
+//            let user = NSKeyedUnarchiver.unarchiveObject(with: userData) as? User {
+//            UserService.I.setCurrent(user)
+            initialViewController = UIStoryboard.initialViewController(for: .main)
+        } else {
+            initialViewController = UIStoryboard.initialViewController(for: .login)
+        }
+        
+        window?.rootViewController = initialViewController
+        window?.makeKeyAndVisible()
+    }
+}
+
 
 
 
