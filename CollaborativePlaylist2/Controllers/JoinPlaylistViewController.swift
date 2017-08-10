@@ -184,9 +184,7 @@ class JoinPlaylistViewController: UIViewController, UITableViewDelegate, UITable
         
     }
 
-   
-    
-    
+ 
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

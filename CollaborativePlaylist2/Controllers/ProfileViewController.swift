@@ -41,7 +41,7 @@ class ProfileViewController: UIViewController {
         
         let ref = Database.database().reference().child("users").child((currentUser?.username)!)
         ref.observeSingleEvent(of: .value, with: { (snapshot) in
-//            self.usernameLabel.text = String(snapshot)
+            self.usernameLabel.text! = String(describing: snapshot) 
         })
         // Do any additional setup after loading the view.
     }

@@ -241,7 +241,12 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
                                     trackId: songSelection.track.id)
                     
                 }
-                print ("hello")
+                
+            } else if segue.identifier == "backToPlaylist" {
+                guard let displayPlaylistViewController = segue.destination as? DisplayPlaylistViewController else {return}
+                displayPlaylistViewController.selectedPlaylist = playlist
+                
+                
             }
             
             

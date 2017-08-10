@@ -79,6 +79,7 @@ class DisplayPlaylistViewController: UIViewController, SPTAudioStreamingPlayback
     
     @IBOutlet weak var currentSongImageView: UIImageView!
     
+    @IBOutlet weak var previousButton: UIButton!
     
     
     
@@ -335,6 +336,9 @@ extension DisplayPlaylistViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.playAllSongsButton.isEnabled = false
+        self.nextButton.isEnabled = false
+        self.previousButton.isEnabled = false
+        
         tableView.rowHeight = 66
        
         
@@ -375,11 +379,15 @@ extension DisplayPlaylistViewController {
             if (auth.session.isValid()) {
                 self.LoginToSpotify.isHidden = true
                 playAllSongsButton.isEnabled = true
+                nextButton.isEnabled = true
+                previousButton.isEnabled = true
                 authSessionUpdated()
                 
             } else {
                 self.LoginToSpotify.isHidden = false
                 playAllSongsButton.isEnabled = true
+                nextButton.isEnabled = true
+                previousButton.isEnabled = true
             }
         }
 
@@ -554,10 +562,17 @@ extension DisplayPlaylistViewController {
         } catch {}
     }
 }
-//tap indicator 
+//Unwind
 
 extension DisplayPlaylistViewController {
-    
+    @IBAction func unwindToDisplayPlaylistViewController(_ segue: UIStoryboardSegue) {
+        
+        // for now, simply defining the method is sufficient.
+        // we'll add code later
+        
+        
+        
+    }
 }
 
 
