@@ -10,10 +10,13 @@ import UIKit
 import FirebaseDatabase
 import Firebase
 
+
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var playlistList = [Playlist]()
     let refreshControl = UIRefreshControl()
+    
+    
     
     
     
@@ -80,6 +83,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     let playlist = playlistList[(index?.row)!]
                     let displayPlaylistViewController = segue.destination as! DisplayPlaylistViewController
                     displayPlaylistViewController.selectedPlaylist = playlist
+                    displayPlaylistViewController.hidesBottomBarWhenPushed = true
                     
                     
                 }
@@ -157,4 +161,5 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
 }
+
 

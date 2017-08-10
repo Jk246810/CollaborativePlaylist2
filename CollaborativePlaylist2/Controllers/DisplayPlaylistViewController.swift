@@ -14,7 +14,7 @@ import Spartan
 import Kingfisher
 import FirebaseDatabaseUI
 import AVFoundation
-import NVActivityIndicatorView
+
 
 
 class DisplayPlaylistViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, SPTAudioStreamingDelegate {
@@ -92,7 +92,13 @@ class DisplayPlaylistViewController: UIViewController, SPTAudioStreamingPlayback
         if !listMusic.isEmpty {
             if playIndex == listMusic.count - 1 {
                 player?.skipNext(printError(_:))
-                
+                if let playbackState = self.player?.playbackState, didStartPlayingMusic {
+                    print("here")
+                    let resume = !playbackState.isPlaying
+                    self.player?.setIsPlaying(resume, callback: printError(_:))
+                    timer.invalidate()
+                    playAllSongsButton.isSelected = false
+                }
                 
                 
             }else {
@@ -140,7 +146,6 @@ class DisplayPlaylistViewController: UIViewController, SPTAudioStreamingPlayback
 //Mark: - Button Actions
    
     @IBAction func playAllSongsButtonTapped(_ sender: UIButton) {
-        
         playAllSongsButton.isSelected = !playAllSongsButton.isSelected
         
         if playAllSongsButton.isSelected {
@@ -156,26 +161,28 @@ class DisplayPlaylistViewController: UIViewController, SPTAudioStreamingPlayback
            
         }
         
-        if !listMusic.isEmpty {
-//            player?.playSpotifyURI(listMusic[playIndex]?.uri, startingWith: 0, startingWithPosition: 0, callback: printError(_:))
-            if let playbackState = self.player?.playbackState, didStartPlayingMusic {
-                print("here")
-                let resume = !playbackState.isPlaying
-                self.player?.setIsPlaying(resume, callback: printError(_:))
+            if !listMusic.isEmpty {
+            //            player?.playSpotifyURI(listMusic[playIndex]?.uri, startingWith: 0, startingWithPosition: 0, callback: printError(_:))
+                if let playbackState = self.player?.playbackState, didStartPlayingMusic {
+                    print("here")
+                    let resume = !playbackState.isPlaying
+                    self.player?.setIsPlaying(resume, callback: printError(_:))
                 
-            } else {
-                didStartPlayingMusic = true
-                self.player?.playSpotifyURI(listMusic[playIndex]?.uri, startingWith: 0, startingWithPosition: 0, callback: printError(_:))
-                print("yay its playing")
+                }else {
+                    didStartPlayingMusic = true
+                    self.player?.playSpotifyURI(listMusic[playIndex]?.uri, startingWith: 0, startingWithPosition: 0, callback: printError(_:))
+                    print("yay its playing")
+                }
+            
+                loadSongDisplay()
+            
+            } else{
+                print("no tracks to play")
             }
-            
-            loadSongDisplay()
-            
-        }else{
-            print("no tracks to play")
-        }
+        
         
     }
+    
 
     @IBAction func doneTapped(_ sender: UIBarButtonItem) {
         if isNewPlaylist {
@@ -329,6 +336,7 @@ extension DisplayPlaylistViewController {
         super.viewDidLoad()
         self.playAllSongsButton.isEnabled = false
         tableView.rowHeight = 66
+       
         
         
         
@@ -425,6 +433,8 @@ extension DisplayPlaylistViewController {
 
     
 }
+
+
 
 //Mark: - Current Song Image Display
 extension DisplayPlaylistViewController {

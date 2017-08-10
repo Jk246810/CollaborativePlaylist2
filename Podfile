@@ -14,6 +14,5 @@ target 'CollaborativePlaylist2' do
   pod 'FirebaseUI/Database'
   pod 'Spartan'
   pod 'Kingfisher', '~> 3.0'
-  pod 'NVActivityIndicatorView'
 
 end

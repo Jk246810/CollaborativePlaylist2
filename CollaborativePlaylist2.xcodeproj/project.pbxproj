@@ -24,6 +24,7 @@
 		D3403A9F1F28FF38007ED86D /* Music.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3403A9E1F28FF38007ED86D /* Music.swift */; };
 		D3490BB01F2FD159004BFFD0 /* ListSpotifyMusicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3490BAF1F2FD159004BFFD0 /* ListSpotifyMusicViewController.swift */; };
 		D3490BB21F2FD6C8004BFFD0 /* SpotifySongsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3490BB11F2FD6C8004BFFD0 /* SpotifySongsCell.swift */; };
+		D35FEDD51F3BD447001851E1 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35FEDD41F3BD447001851E1 /* ProfileViewController.swift */; };
 		D37FDC461F1D5A8100C1F50B /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37FDC451F1D5A8100C1F50B /* Playlist.swift */; };
 		D37FDC481F1D7D5200C1F50B /* PlaylistService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37FDC471F1D7D5200C1F50B /* PlaylistService.swift */; };
 		D3BD919A1F1D32C3001A4797 /* SpotifyAudioPlayback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3BD91971F1D32C3001A4797 /* SpotifyAudioPlayback.framework */; };
@@ -60,6 +61,7 @@
 		D3403A9E1F28FF38007ED86D /* Music.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Music.swift; path = Models/Music.swift; sourceTree = "<group>"; };
 		D3490BAF1F2FD159004BFFD0 /* ListSpotifyMusicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ListSpotifyMusicViewController.swift; path = Controllers/ListSpotifyMusicViewController.swift; sourceTree = "<group>"; };
 		D3490BB11F2FD6C8004BFFD0 /* SpotifySongsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpotifySongsCell.swift; path = Views/SpotifySongsCell.swift; sourceTree = "<group>"; };
+		D35FEDD41F3BD447001851E1 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileViewController.swift; path = Controllers/ProfileViewController.swift; sourceTree = "<group>"; };
 		D37FDC451F1D5A8100C1F50B /* Playlist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Playlist.swift; path = Models/Playlist.swift; sourceTree = "<group>"; };
 		D37FDC471F1D7D5200C1F50B /* PlaylistService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlaylistService.swift; path = Services/PlaylistService.swift; sourceTree = "<group>"; };
 		D3BD91971F1D32C3001A4797 /* SpotifyAudioPlayback.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpotifyAudioPlayback.framework; sourceTree = "<group>"; };
@@ -170,6 +172,7 @@
 			isa = PBXGroup;
 			children = (
 				D31D91891F16A86A00F6AE91 /* ViewController.swift */,
+				D35FEDD41F3BD447001851E1 /* ProfileViewController.swift */,
 				D324C8C01F32831900F4FB64 /* JoinPlaylistViewController.swift */,
 				D3490BAF1F2FD159004BFFD0 /* ListSpotifyMusicViewController.swift */,
 				D3CB67811F17DCBF005D9D81 /* DisplayPlaylistViewController.swift */,
@@ -364,6 +367,7 @@
 				D3C292501F1812E0005BEB20 /* StorageService.swift in Sources */,
 				D324C8C11F32831900F4FB64 /* JoinPlaylistViewController.swift in Sources */,
 				D31D91991F16AC2600F6AE91 /* LoginViewController.swift in Sources */,
+				D35FEDD51F3BD447001851E1 /* ProfileViewController.swift in Sources */,
 				D3CB67781F16E819005D9D81 /* UserService.swift in Sources */,
 				D3CB67841F17E558005D9D81 /* PlaylistCell.swift in Sources */,
 				D3490BB21F2FD6C8004BFFD0 /* SpotifySongsCell.swift in Sources */,
