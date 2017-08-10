@@ -2,15 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "photo_8683_20081226.jpg",
+      "filename" : "skip-back-100.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "skip-back-200.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
+      "filename" : "skip-back-300.png",
       "scale" : "3x"
     }
   ],

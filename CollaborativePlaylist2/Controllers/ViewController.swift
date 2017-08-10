@@ -91,6 +91,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             } else if identifier == "joinPlaylist" {
                 let joinPlaylistViewController = segue.destination as! JoinPlaylistViewController
                 joinPlaylistViewController.playlist = joinPlaylist
+                joinPlaylistViewController.hidesBottomBarWhenPushed = true
                 
             }else if identifier == "newPlaylist" {
                 //                PlaylistService.I.create(playlistName: "playlistName")

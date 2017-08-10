@@ -21,5 +21,11 @@ final class FirebaseQueryService {
         return query
     }
     
-    
+//    func getPlaylists(for user: User) -> DatabaseQuery? {
+//        guard let user = UserService.I.currentUser else {return nil}
+//        let query = db.child("playlists/\(user.uid)")
+//        print("query")
+//        return query
+//    }
+   
 }

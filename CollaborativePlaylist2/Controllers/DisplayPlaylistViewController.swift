@@ -88,6 +88,7 @@ class DisplayPlaylistViewController: UIViewController, SPTAudioStreamingPlayback
         self.navigationController?.popToRootViewController(animated: true)
     }
     
+
     
     
     @IBAction func nextTapped(_ sender: UIButton) {
@@ -354,8 +355,6 @@ extension DisplayPlaylistViewController {
         setupDataSource()
         
          NotificationCenter.default.addObserver(self, selector: #selector(DisplayPlaylistViewController.authSessionUpdated), name: NSNotification.Name(rawValue: "sessionUpdated"), object: nil)
-        
-        
         
       
         

@@ -19,6 +19,7 @@ class addedSongCell: UITableViewCell {
     func configure(with song: Music) {
         
         songNameLabel.text = song.name
+//        artistNameLabel.text = 
         let imageURL = URL(string: song.mainImage)
         songImageView.kf.setImage(with: imageURL)
     }
