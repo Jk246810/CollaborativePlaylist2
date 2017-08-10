@@ -37,7 +37,7 @@ class CreateUsernameViewController: UIViewController {
                 return
             }
             
-            UserService.I.setCurrent(user, writeToUserDefaults: true)
+//            UserService.I.setCurrent(user, writeToUserDefaults: true)
             
             print("create new user: \(user.username)")
             

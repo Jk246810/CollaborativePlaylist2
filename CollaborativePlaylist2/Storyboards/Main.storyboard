@@ -31,11 +31,11 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mi1-WU-aHn" id="ItS-Me-Xcy">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="99.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="99"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="nal-sY-xws">
-                                                    <rect key="frame" x="10" y="10" width="355" height="80"/>
+                                                    <rect key="frame" x="10" y="10" width="355" height="79"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="playlistNameLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dcb-8H-eqi">
                                                             <rect key="frame" x="0.0" y="0.0" width="355" height="37"/>
@@ -44,7 +44,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="accessCodeLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L5l-od-nDO">
-                                                            <rect key="frame" x="0.0" y="42" width="355" height="38"/>
+                                                            <rect key="frame" x="0.0" y="42" width="355" height="37"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -116,7 +116,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SeD-CM-cOe" id="Oxz-Jd-H9Z">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="99.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="99"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AEA-ui-WdO">
@@ -166,7 +166,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pWh-2B-TM0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2767.1999999999998" y="-261.31934032983509"/>
+            <point key="canvasLocation" x="3025" y="-315"/>
         </scene>
         <!--Display Playlist View Controller-->
         <scene sceneID="2sT-6J-A6t">
@@ -289,20 +289,20 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="npc-dt-sPW" id="KVf-ph-Or0">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="89.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="89"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="8qy-LI-ZNY">
-                                                    <rect key="frame" x="10" y="10" width="265" height="70"/>
+                                                    <rect key="frame" x="10" y="10" width="265" height="69"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wxR-Ba-T2K">
-                                                            <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="69" height="69"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" secondItem="wxR-Ba-T2K" secondAttribute="height" multiplier="1:1" id="W3h-IU-H07"/>
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="nameLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jB9-fz-7L5">
-                                                            <rect key="frame" x="80" y="24" width="185" height="21"/>
+                                                            <rect key="frame" x="79" y="24" width="186" height="21"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -351,7 +351,7 @@
                     <navigationItem key="navigationItem" id="LlO-9D-j8c">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="nof-OU-QlB">
                             <connections>
-                                <segue destination="Kng-DZ-jeq" kind="unwind" identifier="cancel" unwindAction="unwindToListNotesViewController:" id="drq-fj-gam"/>
+                                <action selector="cancelButtonTapped:" destination="U5x-ER-HPb" id="7Nq-aM-0CJ"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="dWw-8x-GME">
@@ -363,6 +363,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="LoginToSpotify" destination="cRN-wM-HRH" id="aLM-ze-581"/>
+                        <outlet property="cancelButton" destination="nof-OU-QlB" id="F2d-qe-1mG"/>
                         <outlet property="currentSongImageView" destination="H4P-DL-iaJ" id="qns-zb-ZSK"/>
                         <outlet property="nextButton" destination="gQM-vU-U9d" id="Zaw-nS-ivO"/>
                         <outlet property="playAllSongsButton" destination="d7M-hB-wOg" id="g9J-vE-AC3"/>
@@ -375,7 +376,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k7z-wp-bDn" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="Kng-DZ-jeq" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="3025" y="466"/>
         </scene>
@@ -452,7 +452,7 @@
                     <navigationItem key="navigationItem" title="Your Music" id="ld7-d6-Is0">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="zmM-Lq-LaL">
                             <connections>
-                                <segue destination="gpm-Cm-2hg" kind="unwind" identifier="backToPlaylist" unwindAction="unwindToDisplayPlaylistViewController:" id="fbr-0F-gBA"/>
+                                <segue destination="U5x-ER-HPb" kind="show" identifier="backToPlaylist" id="Wcs-AN-dRT"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -462,9 +462,8 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qG1-3G-gM6" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="gpm-Cm-2hg" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="4084" y="423.23838080959524"/>
+            <point key="canvasLocation" x="3871" y="466"/>
         </scene>
         <!--Home-->
         <scene sceneID="vEO-YQ-dP1">
@@ -590,7 +589,7 @@
         <image name="tab_profile_black" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="hDS-Ie-clv"/>
-        <segue reference="VQJ-FM-CHA"/>
+        <segue reference="3AB-Pv-2Xz"/>
+        <segue reference="Wcs-AN-dRT"/>
     </inferredMetricsTieBreakers>
 </document>

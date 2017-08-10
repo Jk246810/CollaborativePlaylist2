@@ -26,6 +26,7 @@ struct MusicService {
                           name: post.name,
                           uri: post.uri,
                           length: post.songDuration,
+                          dateAdded: Date().timeIntervalSince1970,
                           user: currentUser)
         
         var childUpdates = [String: Any]()

@@ -14,9 +14,8 @@ struct Music {
     let mainImage : String!
     let name: String!
     let uri: String!
-//    let accessCode: String
     let length: Int
-    
+    let dateAdded: TimeInterval
     let user: User
     
     
@@ -31,27 +30,25 @@ extension Music {
             let name = dict["name"] as? String,
             let mainImage = dict["mainImage"] as? String,
             let length = dict["length"] as? Int,
-            let addedAt = dict["addedAt"] as? Date,
+            let dateAdded = dict["dateAdded"] as? Double,
             let userDict = dict["user"] as? [String: Any],
             let uid = userDict["uid"] as? String,
             let username = userDict["username"] as? String
         
-////
-////
+
             else{ return nil }
-////
+
           self.uri = uri
           self.name = name
           self.mainImage = mainImage
           self.length = length
-        
-//          self.accessCode = snapshot.key
+          self.dateAdded = dateAdded
           self.user = User(uid: uid, username: username)
         
 
     
     }
-//
+
     func toDicitionary() -> [String : Any] {
         var dict = [String:Any]()
     
@@ -60,9 +57,8 @@ extension Music {
           dict["name"] = name
           dict["mainImage"] = mainImage
           dict["length"] = length
-         
+          dict["dateAdded"] = dateAdded
           dict["user"] = user.toDicitionary()
-//          dict["accessCode"] = accessCode
         
     
         return dict

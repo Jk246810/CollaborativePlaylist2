@@ -39,9 +39,13 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         let currentUser = UserService.I.currentUser
         
-        let ref = Database.database().reference().child("users").child((currentUser?.username)!)
+        let ref = Database.database().reference().child("users").child((currentUser?.uid)!)
         ref.observeSingleEvent(of: .value, with: { (snapshot) in
-            self.usernameLabel.text! = String(describing: snapshot) 
+            guard let dict = snapshot.value as? [String : Any] else {
+                return
+            }
+            self.usernameLabel.text = dict["username"] as! String
+            
         })
         // Do any additional setup after loading the view.
     }

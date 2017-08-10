@@ -42,6 +42,10 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
     
     @IBOutlet weak var LoginToSpotify: UIButton!
     
+  
+    
+    
+    
     @IBAction func LoginToSpotifyButtonTapped(_ sender: UIButton) {
         if UIApplication.shared.openURL(auth.spotifyWebAuthenticationURL()) {
             if auth.canHandle(auth.redirectURL) {
@@ -242,11 +246,10 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
                     
                 }
                 
-            } else if segue.identifier == "backToPlaylist" {
-                guard let displayPlaylistViewController = segue.destination as? DisplayPlaylistViewController else {return}
+            }else if identifier == "backToPlaylist" {
+                guard let displayPlaylistViewController = segue.destination as? DisplayPlaylistViewController else { return }
+                
                 displayPlaylistViewController.selectedPlaylist = playlist
-                
-                
             }
             
             

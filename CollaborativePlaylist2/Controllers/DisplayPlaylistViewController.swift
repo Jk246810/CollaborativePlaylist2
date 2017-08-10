@@ -81,6 +81,13 @@ class DisplayPlaylistViewController: UIViewController, SPTAudioStreamingPlayback
     
     @IBOutlet weak var previousButton: UIButton!
     
+    @IBOutlet weak var cancelButton: UIBarButtonItem!
+    
+    
+    @IBAction func cancelButtonTapped(_ sender: UIBarButtonItem) {
+        self.navigationController?.popToRootViewController(animated: true)
+    }
+    
     
     
     @IBAction func nextTapped(_ sender: UIButton) {
@@ -93,14 +100,14 @@ class DisplayPlaylistViewController: UIViewController, SPTAudioStreamingPlayback
         if !listMusic.isEmpty {
             if playIndex == listMusic.count - 1 {
                 player?.skipNext(printError(_:))
-                if let playbackState = self.player?.playbackState, didStartPlayingMusic {
-                    print("here")
-                    let resume = !playbackState.isPlaying
-                    self.player?.setIsPlaying(resume, callback: printError(_:))
-                    timer.invalidate()
-                    playAllSongsButton.isSelected = false
-                }
-                
+//                if let playbackState = self.player?.playbackState, didStartPlayingMusic {
+//                    print("here")
+//                    let resume = !playbackState.isPlaying
+//                    self.player?.setIsPlaying(resume, callback: printError(_:))
+////                    timer.invalidate()
+//                    playAllSongsButton.isSelected = false
+//                }
+           
                 
             }else {
                 nextButton.isEnabled = true
@@ -128,6 +135,7 @@ class DisplayPlaylistViewController: UIViewController, SPTAudioStreamingPlayback
         if !listMusic.isEmpty {
             if playIndex == 0 {
                 player?.skipPrevious(printError(_:))
+                
             } else {
                 decrementPlayIndex()
                 guard let track = listMusic[playIndex] else {return}
@@ -343,14 +351,6 @@ extension DisplayPlaylistViewController {
        
         
         
-        
-    //        playAllSongsButton.layer.cornerRadius = playAllSongsButton.bounds.size.width / 2.0
-//        playAllSongsButton.clipsToBounds = true
-        
-        
-        
-        
-        
         setupDataSource()
         
          NotificationCenter.default.addObserver(self, selector: #selector(DisplayPlaylistViewController.authSessionUpdated), name: NSNotification.Name(rawValue: "sessionUpdated"), object: nil)
@@ -560,18 +560,6 @@ extension DisplayPlaylistViewController {
             try AVAudioSession.sharedInstance().setActive(false)
             
         } catch {}
-    }
-}
-//Unwind
-
-extension DisplayPlaylistViewController {
-    @IBAction func unwindToDisplayPlaylistViewController(_ segue: UIStoryboardSegue) {
-        
-        // for now, simply defining the method is sufficient.
-        // we'll add code later
-        
-        
-        
     }
 }
 

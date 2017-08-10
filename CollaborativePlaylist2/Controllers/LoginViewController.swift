@@ -56,7 +56,7 @@ extension LoginViewController: FUIAuthDelegate {
         UserService.I.show(forUID: user.uid) { (user) in
             if let user = user {
                 // handle existing user
-                UserService.I.setCurrent(user, writeToUserDefaults: true)
+                //UserService.I.setCurrent(user, writeToUserDefaults: true)
                 
                 let initialViewController = UIStoryboard.initialViewController(for: .main)
                 self.show(initialViewController, sender: nil)
