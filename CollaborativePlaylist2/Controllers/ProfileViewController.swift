@@ -25,7 +25,8 @@ class ProfileViewController: UIViewController {
 //                player?.logout()
 //            }
             try firebaseAuth.signOut()
-            let initialViewController:UIViewController
+            
+            let initialViewController: UIViewController
             
             initialViewController = UIStoryboard.initialViewController(for: .login)
             

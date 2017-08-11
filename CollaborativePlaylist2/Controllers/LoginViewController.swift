@@ -26,6 +26,7 @@ class LoginViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    
     }
     
     @IBAction func loginButtonTapped(_ sender: UIButton) {
@@ -60,8 +61,6 @@ extension LoginViewController: FUIAuthDelegate {
                 
                 let initialViewController = UIStoryboard.initialViewController(for: .main)
                 self.show(initialViewController, sender: nil)
-                self.view.window?.rootViewController = initialViewController
-                self.view.window?.makeKeyAndVisible()
             } else {
                 // handle new user
                 self.performSegue(withIdentifier: Constants.Segue.toCreateUsername, sender: self)
