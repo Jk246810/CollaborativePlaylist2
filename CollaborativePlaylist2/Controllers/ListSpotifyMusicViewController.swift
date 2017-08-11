@@ -34,7 +34,7 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
     var auth = SPTAuth.defaultInstance()!
     var player: SPTAudioStreamingController?
     var loginUrl: URL?
-    var loadingMoreView:InfiniteScrollActivityView?
+//    var loadingMoreView:InfiniteScrollActivityView?
 
     
     
@@ -63,14 +63,14 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
         NotificationCenter.default.addObserver(self, selector: #selector(ListSpotifyMusicViewController.authSessionUpdated), name: NSNotification.Name(rawValue: "sessionUpdated"), object: nil)
         player = SPTAudioStreamingController.sharedInstance()
         
-        let frame = CGRect(x: 0, y: tableView.contentSize.height, width: tableView.bounds.size.width, height: InfiniteScrollActivityView.defaultHeight)
-        loadingMoreView = InfiniteScrollActivityView(frame: frame)
-        loadingMoreView!.isHidden = true
-        tableView.addSubview(loadingMoreView!)
-        
-        var insets = tableView.contentInset;
-        insets.bottom += InfiniteScrollActivityView.defaultHeight;
-        tableView.contentInset = insets
+//        let frame = CGRect(x: 0, y: tableView.contentSize.height, width: tableView.bounds.size.width, height: InfiniteScrollActivityView.defaultHeight)
+//        loadingMoreView = InfiniteScrollActivityView(frame: frame)
+//        loadingMoreView!.isHidden = true
+//        tableView.addSubview(loadingMoreView!)
+//        
+//        var insets = tableView.contentInset;
+//        insets.bottom += InfiniteScrollActivityView.defaultHeight;
+//        tableView.contentInset = insets
        
     
     }
@@ -112,13 +112,13 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
     
 
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let lastItem = songSelections.count - 1
-        if (indexPath.row == lastItem) {
-            //request more information
-            print("hello")
-        }
-    }
+//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//        let lastItem = songSelections.count - 1
+//        if (indexPath.row == lastItem) {
+//            //request more information
+//            print("hello")
+//        }
+//    }
     
 //    func scrollViewDidScroll(_ scrollView: UIScrollView) {
 //        // ...
@@ -258,31 +258,31 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
        
     }
     
-    var alreadyMadeRequestToAPI = false
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if(!alreadyMadeRequestToAPI) {
-            let screenHeight = tableView.contentSize.height
-            let scrollLimit = screenHeight - tableView.bounds.size.height
-            
-            if(scrollView.contentOffset.y > scrollLimit && tableView.isDragging) {
-                alreadyMadeRequestToAPI = true
-                
-                let frame = CGRect(x: 0, y: tableView.contentSize.height, width: tableView.bounds.size.width, height: InfiniteScrollActivityView.defaultHeight)
-                loadingMoreView?.frame = frame
-                loadingMoreView!.startAnimating()
-                
-                loadMoreData()
-            } //else if(scrollView.contentOffset.y < scrollLimit && tableView.isDragging) {
+//    var alreadyMadeRequestToAPI = false
+//    
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        if(!alreadyMadeRequestToAPI) {
+//            let screenHeight = tableView.contentSize.height
+//            let scrollLimit = screenHeight - tableView.bounds.size.height
+//            
+//            if(scrollView.contentOffset.y > scrollLimit && tableView.isDragging) {
 //                alreadyMadeRequestToAPI = true
-//                let topFrame = CGRect(x: 0, y: tableView.contentSize.height, width: tableView.bounds.size.width, height: InfiniteScrollActivityView.defaultHeight)
-//                loadingMoreView?.frame = topFrame
+//                
+//                let frame = CGRect(x: 0, y: tableView.contentSize.height, width: tableView.bounds.size.width, height: InfiniteScrollActivityView.defaultHeight)
+//                loadingMoreView?.frame = frame
 //                loadingMoreView!.startAnimating()
 //                
-//                loadDataAbove()
-//            }
-        }
-    }
+//                loadMoreData()
+//            } //else if(scrollView.contentOffset.y < scrollLimit && tableView.isDragging) {
+////                alreadyMadeRequestToAPI = true
+////                let topFrame = CGRect(x: 0, y: tableView.contentSize.height, width: tableView.bounds.size.width, height: InfiniteScrollActivityView.defaultHeight)
+////                loadingMoreView?.frame = topFrame
+////                loadingMoreView!.startAnimating()
+////                
+////                loadDataAbove()
+////            }
+//        }
+//    }
     
     func loadMoreData() {
         print("infinite")
@@ -334,11 +334,11 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
         })
 
         
-        self.alreadyMadeRequestToAPI = false
+//        self.alreadyMadeRequestToAPI = false
         
-        self.loadingMoreView!.stopAnimating()
-        
-        self.tableView.reloadData()
+//        self.loadingMoreView!.stopAnimating()
+//        
+//        self.tableView.reloadData()
     }
     
 //    func loadDataAbove() {
@@ -415,38 +415,38 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
 
 }
 
-class InfiniteScrollActivityView: UIView {
-    var activityIndicatorView: UIActivityIndicatorView = UIActivityIndicatorView()
-    static let defaultHeight:CGFloat = 60.0
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setupActivityIndicator()
-    }
-    
-    override init(frame aRect: CGRect) {
-        super.init(frame: aRect)
-        setupActivityIndicator()
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        activityIndicatorView.center = CGPoint(x: self.bounds.size.width/2, y: self.bounds.size.height/2)
-    }
-    
-    func setupActivityIndicator() {
-        activityIndicatorView.activityIndicatorViewStyle = .gray
-        activityIndicatorView.hidesWhenStopped = true
-        self.addSubview(activityIndicatorView)
-    }
-    
-    func stopAnimating() {
-        self.activityIndicatorView.stopAnimating()
-        self.isHidden = true
-    }
-    
-    func startAnimating() {
-        self.isHidden = false
-        self.activityIndicatorView.startAnimating()
-    }
-}
+//class InfiniteScrollActivityView: UIView {
+//    var activityIndicatorView: UIActivityIndicatorView = UIActivityIndicatorView()
+//    static let defaultHeight:CGFloat = 60.0
+//    
+//    required init?(coder aDecoder: NSCoder) {
+//        super.init(coder: aDecoder)
+//        setupActivityIndicator()
+//    }
+//    
+//    override init(frame aRect: CGRect) {
+//        super.init(frame: aRect)
+//        setupActivityIndicator()
+//    }
+//    
+//    override func layoutSubviews() {
+//        super.layoutSubviews()
+//        activityIndicatorView.center = CGPoint(x: self.bounds.size.width/2, y: self.bounds.size.height/2)
+//    }
+//    
+//    func setupActivityIndicator() {
+//        activityIndicatorView.activityIndicatorViewStyle = .gray
+//        activityIndicatorView.hidesWhenStopped = true
+//        self.addSubview(activityIndicatorView)
+//    }
+//    
+//    func stopAnimating() {
+//        self.activityIndicatorView.stopAnimating()
+//        self.isHidden = true
+//    }
+//    
+//    func startAnimating() {
+//        self.isHidden = false
+//        self.activityIndicatorView.startAnimating()
+//    }
+//}

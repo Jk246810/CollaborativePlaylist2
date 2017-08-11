@@ -49,6 +49,15 @@ class ProfileViewController: UIViewController {
         })
         // Do any additional setup after loading the view.
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let identifier = segue.identifier {
+            if identifier == "acknowledgments" {
+                let acknowledgmentsViewController = segue.destination as! AcknowledgmentsViewController
+                acknowledgmentsViewController.hidesBottomBarWhenPushed = true
+            }
+        }
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

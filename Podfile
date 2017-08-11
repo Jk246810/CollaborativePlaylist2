@@ -16,3 +16,4 @@ target 'CollaborativePlaylist2' do
   pod 'Kingfisher', '~> 3.0'
 
 end
+

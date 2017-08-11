@@ -39,6 +39,12 @@
 		D3CB67821F17DCBF005D9D81 /* DisplayPlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CB67811F17DCBF005D9D81 /* DisplayPlaylistViewController.swift */; };
 		D3CB67841F17E558005D9D81 /* PlaylistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CB67831F17E558005D9D81 /* PlaylistCell.swift */; };
 		D3CB67891F17F66C005D9D81 /* addedSongCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CB67881F17F66C005D9D81 /* addedSongCell.swift */; };
+		D3D827861F3E1C2C001D0E49 /* Aknowledments.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3D827851F3E1C2C001D0E49 /* Aknowledments.storyboard */; };
+		D3D827881F3E1CB3001D0E49 /* AcknowledgmentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D827871F3E1CB3001D0E49 /* AcknowledgmentsViewController.swift */; };
+		D3D8278C1F3E1D10001D0E49 /* AlamoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D8278B1F3E1D10001D0E49 /* AlamoViewController.swift */; };
+		D3D8278E1F3E1D28001D0E49 /* KingfisherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D8278D1F3E1D28001D0E49 /* KingfisherViewController.swift */; };
+		D3D827901F3E1D3D001D0E49 /* SpartanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D8278F1F3E1D3D001D0E49 /* SpartanViewController.swift */; };
+		D3D827921F3E1D52001D0E49 /* ObjectMapperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D827911F3E1D52001D0E49 /* ObjectMapperViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -77,6 +83,12 @@
 		D3CB67811F17DCBF005D9D81 /* DisplayPlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DisplayPlaylistViewController.swift; path = Controllers/DisplayPlaylistViewController.swift; sourceTree = "<group>"; };
 		D3CB67831F17E558005D9D81 /* PlaylistCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlaylistCell.swift; path = Views/PlaylistCell.swift; sourceTree = "<group>"; };
 		D3CB67881F17F66C005D9D81 /* addedSongCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = addedSongCell.swift; path = Views/addedSongCell.swift; sourceTree = "<group>"; };
+		D3D827851F3E1C2C001D0E49 /* Aknowledments.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Aknowledments.storyboard; path = Storyboards/Aknowledments.storyboard; sourceTree = "<group>"; };
+		D3D827871F3E1CB3001D0E49 /* AcknowledgmentsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AcknowledgmentsViewController.swift; path = Controllers/AcknowledgmentsViewController.swift; sourceTree = "<group>"; };
+		D3D8278B1F3E1D10001D0E49 /* AlamoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AlamoViewController.swift; path = Controllers/AlamoViewController.swift; sourceTree = "<group>"; };
+		D3D8278D1F3E1D28001D0E49 /* KingfisherViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KingfisherViewController.swift; path = Controllers/KingfisherViewController.swift; sourceTree = "<group>"; };
+		D3D8278F1F3E1D3D001D0E49 /* SpartanViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpartanViewController.swift; path = Controllers/SpartanViewController.swift; sourceTree = "<group>"; };
+		D3D827911F3E1D52001D0E49 /* ObjectMapperViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ObjectMapperViewController.swift; path = Controllers/ObjectMapperViewController.swift; sourceTree = "<group>"; };
 		F0C2B0C02CA6ACB241DE19B4 /* Pods-CollaborativePlaylist2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CollaborativePlaylist2.release.xcconfig"; path = "Pods/Target Support Files/Pods-CollaborativePlaylist2/Pods-CollaborativePlaylist2.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -163,6 +175,7 @@
 			isa = PBXGroup;
 			children = (
 				D31D918D1F16A88200F6AE91 /* Main.storyboard */,
+				D3D827851F3E1C2C001D0E49 /* Aknowledments.storyboard */,
 				D31D91961F16AB7000F6AE91 /* Login.storyboard */,
 			);
 			name = Storyboard;
@@ -171,6 +184,11 @@
 		D31D91951F16A93900F6AE91 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				D3D8278B1F3E1D10001D0E49 /* AlamoViewController.swift */,
+				D3D8278D1F3E1D28001D0E49 /* KingfisherViewController.swift */,
+				D3D8278F1F3E1D3D001D0E49 /* SpartanViewController.swift */,
+				D3D827911F3E1D52001D0E49 /* ObjectMapperViewController.swift */,
+				D3D827871F3E1CB3001D0E49 /* AcknowledgmentsViewController.swift */,
 				D31D91891F16A86A00F6AE91 /* ViewController.swift */,
 				D35FEDD41F3BD447001851E1 /* ProfileViewController.swift */,
 				D324C8C01F32831900F4FB64 /* JoinPlaylistViewController.swift */,
@@ -300,6 +318,7 @@
 				D31D918E1F16A88200F6AE91 /* Main.storyboard in Resources */,
 				D31D91971F16AB7000F6AE91 /* Login.storyboard in Resources */,
 				D31D917D1F16A4A400F6AE91 /* Assets.xcassets in Resources */,
+				D3D827861F3E1C2C001D0E49 /* Aknowledments.storyboard in Resources */,
 				D31D91921F16A8CA00F6AE91 /* Info.plist in Resources */,
 				D31D918C1F16A87700F6AE91 /* LaunchScreen.storyboard in Resources */,
 				D3CB67761F16E297005D9D81 /* GoogleService-Info.plist in Resources */,
@@ -364,17 +383,22 @@
 				D31D919B1F16B53800F6AE91 /* User.swift in Sources */,
 				D37FDC461F1D5A8100C1F50B /* Playlist.swift in Sources */,
 				D3403A9F1F28FF38007ED86D /* Music.swift in Sources */,
+				D3D827881F3E1CB3001D0E49 /* AcknowledgmentsViewController.swift in Sources */,
 				D3C292501F1812E0005BEB20 /* StorageService.swift in Sources */,
 				D324C8C11F32831900F4FB64 /* JoinPlaylistViewController.swift in Sources */,
 				D31D91991F16AC2600F6AE91 /* LoginViewController.swift in Sources */,
 				D35FEDD51F3BD447001851E1 /* ProfileViewController.swift in Sources */,
 				D3CB67781F16E819005D9D81 /* UserService.swift in Sources */,
 				D3CB67841F17E558005D9D81 /* PlaylistCell.swift in Sources */,
+				D3D8278C1F3E1D10001D0E49 /* AlamoViewController.swift in Sources */,
 				D3490BB21F2FD6C8004BFFD0 /* SpotifySongsCell.swift in Sources */,
+				D3D8278E1F3E1D28001D0E49 /* KingfisherViewController.swift in Sources */,
 				D3CB677F1F173743005D9D81 /* Storyboard+Utility.swift in Sources */,
 				D3490BB01F2FD159004BFFD0 /* ListSpotifyMusicViewController.swift in Sources */,
 				D31D918A1F16A86A00F6AE91 /* ViewController.swift in Sources */,
+				D3D827921F3E1D52001D0E49 /* ObjectMapperViewController.swift in Sources */,
 				D3CB67891F17F66C005D9D81 /* addedSongCell.swift in Sources */,
+				D3D827901F3E1D3D001D0E49 /* SpartanViewController.swift in Sources */,
 				D3CB67821F17DCBF005D9D81 /* DisplayPlaylistViewController.swift in Sources */,
 				D3CB677D1F17360F005D9D81 /* Constants.swift in Sources */,
 				D324C8C31F33B99B00F4FB64 /* JoinSpotifySongsCell.swift in Sources */,
@@ -500,6 +524,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "CollaborativePlaylist2/CollaborativePlaylist2-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -520,6 +545,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "CollaborativePlaylist2/CollaborativePlaylist2-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
