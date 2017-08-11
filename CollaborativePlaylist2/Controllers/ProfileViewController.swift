@@ -44,7 +44,7 @@ class ProfileViewController: UIViewController {
             guard let dict = snapshot.value as? [String : Any] else {
                 return
             }
-            self.usernameLabel.text = dict["username"] as! String
+            self.usernameLabel.text = ("Username: \(dict["username"] as! String)")
             
         })
         // Do any additional setup after loading the view.

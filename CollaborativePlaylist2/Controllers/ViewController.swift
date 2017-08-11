@@ -96,6 +96,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             }else if identifier == "newPlaylist" {
                 //                PlaylistService.I.create(playlistName: "playlistName")
                 
+                let displayPlaylistViewController = segue.destination as! DisplayPlaylistViewController
+                displayPlaylistViewController.hidesBottomBarWhenPushed = true
+                
             }
         }
     }
@@ -106,7 +109,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         super.viewDidLoad()
         
         // print((Auth.auth().currentUser?.uid)!)
-        self.tableView.rowHeight = 60
+        self.tableView.rowHeight = 66
+        
         UserService.I.observeUser = { user in
             UserService.I.playlists(for: user.uid, completion: { (playlist) in
                 self.playlistList = playlist

@@ -57,7 +57,7 @@ class ListSpotifyMusicViewController: UIViewController, UITableViewDelegate, UIT
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.rowHeight = 80
+        tableView.rowHeight = 66
         
         
         NotificationCenter.default.addObserver(self, selector: #selector(ListSpotifyMusicViewController.authSessionUpdated), name: NSNotification.Name(rawValue: "sessionUpdated"), object: nil)
