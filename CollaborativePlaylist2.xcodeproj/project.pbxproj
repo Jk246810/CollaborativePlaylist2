@@ -286,7 +286,7 @@
 				TargetAttributes = {
 					D31D91711F16A4A400F6AE91 = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = TUYCPAYDZW;
+						DevelopmentTeam = 9CL97632BB;
 						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 					};
@@ -512,14 +512,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = TUYCPAYDZW;
+				DEVELOPMENT_TEAM = 9CL97632BB;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/CollaborativePlaylist2/Frameworks",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/CollaborativePlaylist2/Supporting /Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.jamee.CollaborativePlaylist2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jamee.Collab;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "CollaborativePlaylist2/CollaborativePlaylist2-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -534,14 +534,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = TUYCPAYDZW;
+				DEVELOPMENT_TEAM = 9CL97632BB;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/CollaborativePlaylist2/Frameworks",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/CollaborativePlaylist2/Supporting /Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.jamee.CollaborativePlaylist2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jamee.Collab;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "CollaborativePlaylist2/CollaborativePlaylist2-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
