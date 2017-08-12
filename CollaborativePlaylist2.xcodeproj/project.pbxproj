@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C2C4EBAA603DD174D8F7CC7E /* Pods_CollaborativePlaylist2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2DE662469A9B810F837295D /* Pods_CollaborativePlaylist2.framework */; };
+		D31D54241F3E6601003DAC03 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D31D54231F3E6601003DAC03 /* GoogleService-Info.plist */; };
 		D31D91761F16A4A400F6AE91 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31D91751F16A4A400F6AE91 /* AppDelegate.swift */; };
 		D31D917D1F16A4A400F6AE91 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D31D917C1F16A4A400F6AE91 /* Assets.xcassets */; };
 		D31D918A1F16A86A00F6AE91 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31D91891F16A86A00F6AE91 /* ViewController.swift */; };
@@ -32,7 +33,6 @@
 		D3BD919C1F1D32C3001A4797 /* SpotifyMetadata.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3BD91991F1D32C3001A4797 /* SpotifyMetadata.framework */; };
 		D3C292501F1812E0005BEB20 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C2924F1F1812E0005BEB20 /* StorageService.swift */; };
 		D3CB67741F16CE51005D9D81 /* CreateUsernameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CB67731F16CE51005D9D81 /* CreateUsernameViewController.swift */; };
-		D3CB67761F16E297005D9D81 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D3CB67751F16E297005D9D81 /* GoogleService-Info.plist */; };
 		D3CB67781F16E819005D9D81 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CB67771F16E819005D9D81 /* UserService.swift */; };
 		D3CB677D1F17360F005D9D81 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CB677C1F17360F005D9D81 /* Constants.swift */; };
 		D3CB677F1F173743005D9D81 /* Storyboard+Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CB677E1F173743005D9D81 /* Storyboard+Utility.swift */; };
@@ -50,6 +50,7 @@
 /* Begin PBXFileReference section */
 		0A548AE2FA23F90B68833B5B /* Pods-CollaborativePlaylist2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CollaborativePlaylist2.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CollaborativePlaylist2/Pods-CollaborativePlaylist2.debug.xcconfig"; sourceTree = "<group>"; };
 		B2DE662469A9B810F837295D /* Pods_CollaborativePlaylist2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CollaborativePlaylist2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D31D54231F3E6601003DAC03 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D31D91721F16A4A400F6AE91 /* CollaborativePlaylist2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CollaborativePlaylist2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D31D91751F16A4A400F6AE91 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D31D917C1F16A4A400F6AE91 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -76,7 +77,6 @@
 		D3BD919D1F1D32F8001A4797 /* CollaborativePlaylist2-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CollaborativePlaylist2-Bridging-Header.h"; sourceTree = "<group>"; };
 		D3C2924F1F1812E0005BEB20 /* StorageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StorageService.swift; path = Services/StorageService.swift; sourceTree = "<group>"; };
 		D3CB67731F16CE51005D9D81 /* CreateUsernameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateUsernameViewController.swift; sourceTree = "<group>"; };
-		D3CB67751F16E297005D9D81 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D3CB67771F16E819005D9D81 /* UserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserService.swift; path = Services/UserService.swift; sourceTree = "<group>"; };
 		D3CB677C1F17360F005D9D81 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = "Supporting /Constants.swift"; sourceTree = "<group>"; };
 		D3CB677E1F173743005D9D81 /* Storyboard+Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Storyboard+Utility.swift"; path = "Extensions/Storyboard+Utility.swift"; sourceTree = "<group>"; };
@@ -166,7 +166,7 @@
 				D31D918B1F16A87700F6AE91 /* LaunchScreen.storyboard */,
 				D3CB677C1F17360F005D9D81 /* Constants.swift */,
 				D31D91911F16A8CA00F6AE91 /* Info.plist */,
-				D3CB67751F16E297005D9D81 /* GoogleService-Info.plist */,
+				D31D54231F3E6601003DAC03 /* GoogleService-Info.plist */,
 			);
 			name = Supporting;
 			sourceTree = "<group>";
@@ -321,7 +321,7 @@
 				D3D827861F3E1C2C001D0E49 /* Aknowledments.storyboard in Resources */,
 				D31D91921F16A8CA00F6AE91 /* Info.plist in Resources */,
 				D31D918C1F16A87700F6AE91 /* LaunchScreen.storyboard in Resources */,
-				D3CB67761F16E297005D9D81 /* GoogleService-Info.plist in Resources */,
+				D31D54241F3E6601003DAC03 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

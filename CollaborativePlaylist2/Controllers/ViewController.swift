@@ -25,7 +25,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     var joinPlaylist: Playlist?
     
     @IBAction func joinButtonTapped(_ sender: UIBarButtonItem) {
-        let alertController = UIAlertController(title: "Enter an access code to join another User's Playlist", message: "enter an access Code to join another user's playlist", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Join", message: "enter an access Code to join another user's playlist", preferredStyle: .alert)
         
         alertController.addTextField {(textField: UITextField) in
             textField.placeholder = "-KqZYL0GC3NRYFP9Tq2Y"
@@ -68,7 +68,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PlaylistCell") as! PlaylistCell
         let playlist = playlistList[indexPath.row]
-        cell.accessCodeLabel.text = playlist.accessCode
+        cell.accessCodeLabel.text = ("Access Code: \(playlist.accessCode)")
         cell.playlistNameLabel.text = playlist.playlistName
         
         return cell
